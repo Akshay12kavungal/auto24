@@ -1,0 +1,37 @@
+{% extends 'adminpage/base.html' %}
+
+{% block title %}Manage Customers{% endblock %}
+
+{% block content %}
+<div class="mt-4">
+    <h1>Manage Customers</h1>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Mobile</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td>{{ customer.id }}</td>
+                <td>{{ customer.get_name }}</td>
+                <td>{{ customer.user.email }}</td>
+                <td>{{ customer.address }}</td>
+                <td>{{ customer.mobile }}</td>
+                <td>
+                    <a href="{% url 'edit_customer' customer.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'delete_customer' customer.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

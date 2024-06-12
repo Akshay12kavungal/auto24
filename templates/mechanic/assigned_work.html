@@ -1,0 +1,14 @@
+
+{% extends 'mechanic/base.html' %}
+
+{% block title %}My Works{% endblock %}
+
+{% block content %}
+
+<h1>Assigned Work</h1>
+<ul>
+    {% for work in assigned_work %}
+        <li>{{ work.service_request }}</li>
+    {% endfor %}
+
+{% endblock %}

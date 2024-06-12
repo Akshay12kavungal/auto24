@@ -1,0 +1,12 @@
+{% extends 'customer/base.html' %}
+
+{% block title %}Fill Vehicle Details{% endblock %}
+
+{% block content %}
+    <h1>Fill Vehicle Details</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Next</button>
+    </form>
+{% endblock %}

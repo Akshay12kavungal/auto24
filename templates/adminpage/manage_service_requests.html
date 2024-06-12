@@ -1,0 +1,43 @@
+{% extends 'adminpage/base.html' %}
+
+{% block title %}Manage Service Requests{% endblock %}
+
+{% block content %}
+<div class="mt-4">
+    <h1>Manage Service Requests</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Vehicle</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Cost</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service_request in service_requests %}
+            <tr>
+                <td>{{ service_request.id }}</td>
+                <td>{{ service_request.customer.get_name }}</td>
+                <td>{{ service_request.vehicle }}</td>
+                <td>{{ service_request.problem_description }}</td>
+                <td>{{ service_request.get_status_display }}</td>
+                <td>{{ service_request.cost }}</td>
+                <td>{{ service_request.created_at }}</td>
+                <td>
+                    {% if service_request.status == 'Pending' %}
+                    <a href="{% url 'approve_service_request' service_request.id %}" class="btn btn-success btn-sm">Approve</a>
+                    {% elif service_request.status == 'Approved' %}
+                    <a href="{% url 'assign_mechanic' service_request.id %}" class="btn btn-primary btn-sm">Assign Mechanic</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

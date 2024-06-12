@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Assign Mechanic{% endblock %}
+
+{% block content %}
+<div class="mt-4">
+    <h1>Assign Mechanic to Service Request</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="mechanic">Select Mechanic</label>
+            <select name="mechanic" id="mechanic" class="form-control">
+                {% for mechanic in mechanics %}
+                <option value="{{ mechanic.id }}">{{ mechanic.get_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Assign Mechanic</button>
+        <a href="{% url 'manage_service_requests' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
