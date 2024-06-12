@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from admin_management.forms import LoginForm
 from .models import Customer, Vehicle, ServiceRequest, Feedback
 from .forms import UserForm, CustomerForm, VehicleForm, ServiceRequestForm, FeedbackForm
-from mechanic_management.models import Mechanic
+from mechanic_management.models import Mechanic, MechanicWork
 
 def signup_customer(request):
     if request.method == 'POST':
@@ -40,11 +40,16 @@ def login_customer(request):
         form = LoginForm()
     return render(request, 'registrations/login_customer.html', {'form': form})
 
+
+
+
 login_required
 def customer_home(request):
     customer = Customer.objects.get(user=request.user)
     service_requests = ServiceRequest.objects.filter(customer=customer)
     return render(request, 'customer/customer_home.html', {'service_requests': service_requests})
+
+
 
 @login_required
 def fill_vehicle_details(request):
@@ -58,6 +63,7 @@ def fill_vehicle_details(request):
     else:
         form = VehicleForm()
     return render(request, 'customer/fill_vehicle_details.html', {'form': form})
+
 
 
 @login_required
@@ -75,12 +81,27 @@ def make_service_request(request):
         service_request_form = ServiceRequestForm()
     return render(request, 'customer/make_service_request.html', {'form': service_request_form})
 
+
+
+@login_required
+def service_request_detail(request, pk):
+    service_request = get_object_or_404(ServiceRequest, pk=pk, customer__user=request.user)
+    mechanic_work = MechanicWork.objects.filter(service_request=service_request).first()
+    return render(request, 'customer/service_request_detail.html', {'service_request': service_request, 'mechanic_work': mechanic_work})
+
+def my_services(request):
+    customer = Customer.objects.get(user=request.user)
+    service_requests = ServiceRequest.objects.filter(customer=customer)
+    return render(request,'customer/my_services.html', {'service_requests': service_requests})
+
 @login_required
 def delete_service_request(request, pk):
     service_request = ServiceRequest.objects.get(pk=pk, customer__user=request.user)
     if service_request.status == 'Pending':
         service_request.delete()
     return redirect('customer_home')
+
+
 
 @login_required
 def customer_profile(request):
@@ -93,6 +114,9 @@ def customer_profile(request):
     else:
         form = CustomerForm(instance=customer)
     return render(request, 'customer/customer_profile.html', {'form': form})
+
+
+
 @login_required
 def customer_feedback(request):
     if request.method == 'POST':

@@ -31,9 +31,9 @@ class ServiceRequest(models.Model):
     STATUS_CHOICES = [
         ('Pending', 'Pending'),
         ('Approved', 'Approved'),
-        ('Repairing', 'Repairing'),
         ('Repairing Done', 'Repairing Done'),
-        ('Released', 'Released')
+        ('Work Done', 'Work Done')
+
     ]
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='service_requests')

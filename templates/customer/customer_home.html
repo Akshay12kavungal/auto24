@@ -40,36 +40,8 @@
     <div class="container mt-4">
         <h2>Welcome to Auto24</h2>
         <p>Auto24 is your go-to platform for finding the best service stations and automotive services. We provide a comprehensive directory of service stations to help you find the best service for your vehicle.</p>
+    
     </div>
-
-    <h2>Your Profile</h2>
-    <p><strong>Name:</strong> {{ customer.get_name }}</p>
-    <p><strong>Address:</strong> {{ customer.address }}</p>
-    <p><strong>Mobile:</strong> {{ customer.mobile }}</p>
-    <p><strong>Profile Picture:</strong> {% if customer.profile_pic %}<img src="{{ customer.profile_pic.url }}" alt="Profile Picture">{% else %}Not available{% endif %}</p>
-    
-    <h2>Your Vehicles</h2>
-    {% if vehicles %}
-        <ul>
-            {% for vehicle in vehicles %}
-                <li>{{ vehicle.number }} - {{ vehicle.model }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No vehicles added yet.</p>
-    {% endif %}
-    
-    <h2>Your Service Requests</h2>
-    {% if service_requests %}
-        <ul>
-            {% for request in service_requests %}
-                <li>{{ request.vehicle.number }} - {{ request.status }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No service requests made yet.</p>
-    {% endif %}
-
     <!-- Services Section -->
     <div class="container mt-4">
         <h2>Our Services</h2>
