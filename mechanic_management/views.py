@@ -65,10 +65,16 @@ def update_work_status(request, pk):
         form = UpdateWorkStatusForm(request.POST, instance=work)
         if form.is_valid():
             form.save()
-            service_request = ServiceRequest.objects.get(pk=pk)
-            service_request.status = 'Work Done'
+            
+            # Update the status of the associated service request
+            service_request = work.service_request
+            if work.status == 'Repairing Done':
+                service_request.status = 'Repairing Done'
+            elif work.status == 'Released':
+                service_request.status = 'Released'
             service_request.save()
-            return redirect('assigned_work')
+            
+            return redirect('mechanic_home')
     else:
         form = UpdateWorkStatusForm(instance=work)
     return render(request, 'mechanic/update_work_status.html', {'form': form, 'work': work})
