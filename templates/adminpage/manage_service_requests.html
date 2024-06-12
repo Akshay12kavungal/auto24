@@ -3,7 +3,7 @@
 {% block title %}Manage Service Requests{% endblock %}
 
 {% block content %}
-<div class="mt-4">
+<div class="container mt-4">
     <h1>Manage Service Requests</h1>
     <table class="table table-striped">
         <thead>
@@ -30,9 +30,9 @@
                 <td>{{ service_request.created_at }}</td>
                 <td>
                     {% if service_request.status == 'Pending' %}
-                    <a href="{% url 'approve_service_request' service_request.id %}" class="btn btn-success btn-sm">Approve</a>
+                    <a href="{% url 'approve_service_request' service_request.id %}" class="btn btn-success btn-sm me-2">Approve</a>
                     {% elif service_request.status == 'Approved' %}
-                    <a href="{% url 'assign_mechanic' service_request.id %}" class="btn btn-primary btn-sm">Assign Mechanic</a>
+                    <a href="{% url 'assign_mechanic' service_request.id %}" class="btn btn-primary btn-sm me-2">Assign Mechanic</a>
                     {% endif %}
                 </td>
             </tr>

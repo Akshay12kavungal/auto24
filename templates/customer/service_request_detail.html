@@ -3,21 +3,29 @@
 {% block title %}Service Request Details{% endblock %}
 
 {% block content %}
-<h1>Service Request Details</h1>
-<p><strong>Vehicle:</strong> {{ service_request.vehicle }}</p>
-<p><strong>Problem Description:</strong> {{ service_request.problem_description }}</p>
-<p><strong>Status:</strong> {{ service_request.status }}</p>
-<p><strong>Cost:</strong> {{ service_request.cost }}</p>
-<p><strong>Created At:</strong> {{ service_request.created_at }}</p>
+<div class="container mt-4">
+    <h1>Service Request Details</h1>
+    <div class="card mt-3">
+        <div class="card-body">
+            <p class="card-text"><strong>Vehicle:</strong> {{ service_request.vehicle }}</p>
+            <p class="card-text"><strong>Problem Description:</strong> {{ service_request.problem_description }}</p>
+            <p class="card-text"><strong>Status:</strong> {{ service_request.status }}</p>
+            <p class="card-text"><strong>Cost:</strong> {{ service_request.cost }}</p>
+            <p class="card-text"><strong>Created At:</strong> {{ service_request.created_at }}</p>
+            
+            {% if mechanic_work %}
+            <hr>
+            <h2 class="mt-3">Mechanic Work Details</h2>
+            <p class="card-text"><strong>Mechanic:</strong> {{ mechanic_work.mechanic.user.username }}</p>
+            <p class="card-text"><strong>Status:</strong> {{ service_request.status }}</p>
+            <p class="card-text"><strong>Assigned At:</strong> {{ mechanic_work.assigned_at }}</p>
+            {% else %}
+            <hr>
+            <p class="card-text">No mechanic assigned yet.</p>
+            {% endif %}
+        </div>
+    </div>
 
-{% if mechanic_work %}
-    <h2>Mechanic Work Details</h2>
-    <p><strong>Mechanic:</strong> {{ mechanic_work.mechanic.user.username }}</p>
-    <p><strong>Status:</strong> {{ service_request.status }}</p>
-    <p><strong>Assigned At:</strong> {{ mechanic_work.assigned_at }}</p>
-{% else %}
-    <p>No mechanic assigned yet.</p>
-{% endif %}
-
-<a href="{% url 'customer_home' %}">Back to Home</a>
+    <a href="{% url 'customer_home' %}" class="btn btn-secondary mt-3">Back to Home</a>
+</div>
 {% endblock %}

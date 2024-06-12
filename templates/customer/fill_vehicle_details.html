@@ -3,10 +3,14 @@
 {% block title %}Fill Vehicle Details{% endblock %}
 
 {% block content %}
+<div class="container mt-4">
     <h1>Fill Vehicle Details</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Next</button>
+        <div class="mb-3">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-primary">Next</button>
     </form>
+</div>
 {% endblock %}

@@ -1,15 +1,37 @@
-{% extends 'base.html' %}
+{% extends 'adminpage/base.html' %}
 
-{% block title %}{% if user_form.instance.pk %}Edit Customer{% else %}Add Customer{% endif %}{% endblock %}
+{% block title %}
+    {% if user_form.instance.pk %}
+        Edit Customer
+    {% else %}
+        Add Customer
+    {% endif %}
+{% endblock %}
 
 {% block content %}
-<div class="mt-4">
-    <h1>{% if user_form.instance.pk %}Edit{% else %}Add{% endif %} Customer</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">
+        {% if user_form.instance.pk %}
+            Edit Customer
+        {% else %}
+            Add Customer
+        {% endif %}
+    </h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ user_form.as_p }}
-        {{ customer_form.as_p }}
-        <button type="submit" class="btn btn-primary">{% if user_form.instance.pk %}Update{% else %}Add{% endif %}</button>
+        <div class="mb-3">
+            {{ user_form.as_p }}
+        </div>
+        <div class="mb-3">
+            {{ customer_form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-primary">
+            {% if user_form.instance.pk %}
+                Update
+            {% else %}
+                Add
+            {% endif %}
+        </button>
         <a href="{% url 'manage_customers' %}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>

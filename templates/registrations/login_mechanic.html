@@ -3,14 +3,31 @@
 {% block title %}Mechanic Login{% endblock %}
 
 {% block content %}
-<h1>Mechanic Login</h1>
-{% if error_message %}
-    <p>{{ error_message }}</p>
-{% endif %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
-<p>Don't have an account? <a href="{% url 'signup_mechanic' %}">Register here</a></p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title text-center mb-4">Mechanic Login</h1>
+                    {% if error_message %}
+                        <div class="alert alert-danger">{{ error_message }}</div>
+                    {% endif %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_username">Username</label>
+                            <input type="text" class="form-control" id="id_username" name="username" placeholder="Enter your username">
+                        </div>
+                        <div class="form-group">
+                            <label for="id_password">Password</label>
+                            <input type="password" class="form-control" id="id_password" name="password" placeholder="Enter your password">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-4">Login</button>
+                    </form>
+                    <p class="text-center mt-3">Don't have an account? <a href="{% url 'signup_mechanic' %}" class="text-primary">Register here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

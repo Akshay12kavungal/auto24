@@ -1,25 +1,37 @@
-<!-- templates/admin/admin_home.html -->
-
 {% extends "adminpage/base.html" %}
 
 {% block content %}
-    <h2>Admin Dashboard</h2>
-    <h3>Customers</h3>
-    <ul>
-        {% for customer in customers %}
-            <li>{{ customer.get_name }}</li>
-        {% endfor %}
-    </ul>
-    <h3>Mechanics</h3>
-    <ul>
-        {% for mechanic in mechanics %}
-            <li>{{ mechanic.get_name }} - {{ mechanic.status }}</li>
-        {% endfor %}
-    </ul>
-    <h3>Service Requests</h3>
-    <ul>
-        {% for request in service_requests %}
-            <li>{{ request.vehicle }} - {{ request.status }}</li>
-        {% endfor %}
-    </ul>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mt-4">Admin Dashboard</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Customers</h3>
+            <ul class="list-group">
+                {% for customer in customers %}
+                    <li class="list-group-item">{{ customer.get_name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h3>Mechanics</h3>
+            <ul class="list-group">
+                {% for mechanic in mechanics %}
+                    <li class="list-group-item">{{ mechanic.get_name }} - {{ mechanic.status }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h3>Service Requests</h3>
+            <ul class="list-group">
+                {% for request in service_requests %}
+                    <li class="list-group-item">{{ request.vehicle }} - {{ request.status }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
