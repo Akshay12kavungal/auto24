@@ -3,10 +3,10 @@
 {% block title %}Update Work Status{% endblock %}
 
 {% block content %}
-    <h1>Update Work Status</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Update</button>
-    </form>
+<h1>Update Work Status for {{ work.service_request }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update</button>
+</form>
 {% endblock %}

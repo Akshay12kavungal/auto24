@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from .models import Customer, Mechanic, MechanicWork, ServiceRequest, Feedback, Vehicle
-from .forms import LoginForm, UserForm, CustomerForm, MechanicForm, ServiceRequestForm, FeedbackForm, VehicleForm,LoginForm
+from .forms import LoginForm, UpdateWorkStatusForm, UserForm, CustomerForm, MechanicForm, ServiceRequestForm, FeedbackForm, VehicleForm,LoginForm
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -105,6 +105,7 @@ def mechanic_logout(request):
     logout(request)
     return redirect('home')  
 
+#customer
 @login_required
 def customer_home(request):
     customer = Customer.objects.get(user=request.user)
@@ -174,6 +175,7 @@ def customer_feedback(request):
         form = FeedbackForm()
     return render(request, 'customer/customer_feedback.html', {'form': form})
 
+#mechanic
 @login_required
 def mechanic_home(request):
     mechanic = Mechanic.objects.get(user=request.user)
@@ -189,13 +191,16 @@ def assigned_work(request):
 
 @login_required
 def update_work_status(request, pk):
-    mechanic = Mechanic.objects.get(user=request.user)
-    work = MechanicWork.objects.get(pk=pk, mechanic=mechanic)
+    mechanic = get_object_or_404(Mechanic, user=request.user)
+    work = get_object_or_404(MechanicWork, pk=pk, mechanic=mechanic)
     if request.method == 'POST':
-        work.status = request.POST.get('status')
-        work.save()
-        return redirect('mechanic_home')
-    return render(request, 'mechanic/update_work_status.html', {'work': work})
+        form = UpdateWorkStatusForm(request.POST, instance=work)
+        if form.is_valid():
+            form.save()
+            return redirect('assigned_work')
+    else:
+        form = UpdateWorkStatusForm(instance=work)
+    return render(request, 'mechanic/update_work_status.html', {'form': form, 'work': work})
 
 @login_required
 def mechanic_profile(request):
@@ -222,6 +227,7 @@ def mechanic_feedback(request):
         form = FeedbackForm()
     return render(request, 'mechanic/mechanic_feedback.html', {'form': form})
 
+#admin
 @staff_member_required
 def admin_home(request):
     customers = Customer.objects.all()

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Customer, Mechanic, ServiceRequest, Feedback, Vehicle
+from .models import Customer, Mechanic, MechanicWork, ServiceRequest, Feedback, Vehicle
 from django.contrib.auth.forms import UserCreationForm
 
 class UserForm(forms.ModelForm):
@@ -34,7 +34,13 @@ class VehicleForm(forms.ModelForm):
         model = Vehicle
         fields = ['number', 'model', 'customer']  # Add 'customer_name' field to the form
 
-    
+class UpdateWorkStatusForm(forms.ModelForm):
+    class Meta:
+        model = MechanicWork
+        fields = ['status']
+        widgets = {
+            'status': forms.Select(choices=MechanicWork._meta.get_field('status').choices),
+        }
 
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')

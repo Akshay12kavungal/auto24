@@ -1,14 +1,15 @@
+{% extends 'base.html' %}
 
-{% extends 'mechanic/base.html' %}
-
-{% block title %}My Works{% endblock %}
+{% block title %}Assigned Work{% endblock %}
 
 {% block content %}
-
 <h1>Assigned Work</h1>
 <ul>
     {% for work in assigned_work %}
-        <li>{{ work.service_request }}</li>
+        <li>
+            {{ work.service_request }} - {{ work.status }}
+            <a href="{% url 'update_work_status' work.pk %}">Update Status</a>
+        </li>
     {% endfor %}
-
+</ul>
 {% endblock %}
