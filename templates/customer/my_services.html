@@ -3,13 +3,16 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-
-<h1>My Service Requests</h1>
-<ul>
-    {% for request in service_requests %}
-        <li>
-            <a href="{% url 'service_request_detail' request.pk %}">{{ request.vehicle }} - {{ request.problem_description }}</a>
+<div class="container mt-4">
+    <h1>My Service Requests</h1>
+    <ul class="list-group mt-3">
+        {% for request in service_requests %}
+        <li class="list-group-item">
+            <a href="{% url 'service_request_detail' request.pk %}">
+                {{ request.vehicle }} - {{ request.problem_description }}
+            </a>
         </li>
-    {% endfor %}
-   
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

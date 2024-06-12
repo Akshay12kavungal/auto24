@@ -3,11 +3,27 @@
 {% block title %}Customer Signup{% endblock %}
 
 {% block content %}
-<h1>Customer Signup</h1>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-    {{ customer_form.as_p }}
-    <button type="submit">Signup</button>
-</form>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title">Customer Signup</h1>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ user_form.as_p }}
+                        </div>
+                        <div class="mb-3">
+                            {{ customer_form.as_p }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Signup</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

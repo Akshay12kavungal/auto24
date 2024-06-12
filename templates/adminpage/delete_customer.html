@@ -3,13 +3,15 @@
 {% block title %}Delete Customer{% endblock %}
 
 {% block content %}
-<div class="mt-4">
+<div class="container mt-4">
     <h1>Delete Customer</h1>
     <p>Are you sure you want to delete customer {{ customer.get_name }}?</p>
     <form method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Delete</button>
-        <a href="{% url 'manage_customers' %}" class="btn btn-secondary">Cancel</a>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-danger me-2">Delete</button>
+            <a href="{% url 'manage_customers' %}" class="btn btn-secondary">Cancel</a>
+        </div>
     </form>
 </div>
 {% endblock %}
