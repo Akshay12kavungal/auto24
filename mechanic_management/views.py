@@ -65,6 +65,9 @@ def update_work_status(request, pk):
         form = UpdateWorkStatusForm(request.POST, instance=work)
         if form.is_valid():
             form.save()
+            service_request = ServiceRequest.objects.get(pk=pk)
+            service_request.status = 'Work Done'
+            service_request.save()
             return redirect('assigned_work')
     else:
         form = UpdateWorkStatusForm(instance=work)

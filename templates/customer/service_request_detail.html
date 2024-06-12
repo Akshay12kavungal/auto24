@@ -1,0 +1,23 @@
+{% extends 'customer/base.html' %}
+
+{% block title %}Service Request Details{% endblock %}
+
+{% block content %}
+<h1>Service Request Details</h1>
+<p><strong>Vehicle:</strong> {{ service_request.vehicle }}</p>
+<p><strong>Problem Description:</strong> {{ service_request.problem_description }}</p>
+<p><strong>Status:</strong> {{ service_request.status }}</p>
+<p><strong>Cost:</strong> {{ service_request.cost }}</p>
+<p><strong>Created At:</strong> {{ service_request.created_at }}</p>
+
+{% if mechanic_work %}
+    <h2>Mechanic Work Details</h2>
+    <p><strong>Mechanic:</strong> {{ mechanic_work.mechanic.user.username }}</p>
+    <p><strong>Status:</strong> {{ service_request.status }}</p>
+    <p><strong>Assigned At:</strong> {{ mechanic_work.assigned_at }}</p>
+{% else %}
+    <p>No mechanic assigned yet.</p>
+{% endif %}
+
+<a href="{% url 'customer_home' %}">Back to Home</a>
+{% endblock %}
