@@ -25,9 +25,8 @@ class MechanicWork(models.Model):
     status = models.CharField(max_length=20, choices=[
         ('Repairing', 'Repairing'),
         ('Repairing Done', 'Repairing Done'),
-        ('Work Done', 'Work Done')
+        ('Released', 'Released')
     ], default='Repairing')
 
     def __str__(self):
         return f"Work on {self.service_request} by {self.mechanic.get_name}"
-
