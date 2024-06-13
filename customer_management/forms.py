@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Customer, Vehicle, ServiceRequest, Feedback
+from .models import Customer, Notification, Vehicle, ServiceRequest, Feedback
 
 class UserForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -29,3 +29,9 @@ class FeedbackForm(forms.ModelForm):
     class Meta:
         model = Feedback
         fields = ['mechanic', 'rating', 'feedback']
+
+
+class NotificationForm(forms.ModelForm):
+    class Meta:
+        model = Notification
+        fields = ['recipient', 'message',]

@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from admin_management.forms import LoginForm
 from customer_management.forms import UserForm
-from customer_management.models import ServiceRequest
+from customer_management.models import Notification, ServiceRequest
 from .models import Mechanic, MechanicWork
 from .forms import MechanicForm, UpdateWorkStatusForm
 from django.contrib.auth import authenticate, login,logout
@@ -74,10 +74,14 @@ def update_work_status(request, pk):
                 service_request.save()
             
             work.save()
+            message = f"Your service request status has been updated to {service_request.status}."
+            Notification.objects.create(recipient=service_request.customer.user, message=message)
+
             return redirect('mechanic_home')
     else:
         form = UpdateWorkStatusForm(instance=work)
     return render(request, 'mechanic/update_work_status.html', {'form': form, 'work': work})
+           
 
 
 
