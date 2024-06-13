@@ -27,6 +27,7 @@ class MechanicWork(models.Model):
         ('Repairing Done', 'Repairing Done'),
         ('Released', 'Released')
     ], default='Repairing')
+    cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
         return f"Work on {self.service_request} by {self.mechanic.get_name}"

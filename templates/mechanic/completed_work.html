@@ -1,0 +1,35 @@
+{% extends 'mechanic/base.html' %}
+
+{% block title %}Completed Work{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Completed Work</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Service Request</th>
+                <th>Vehicle</th>
+                <th>Customer</th>
+                <th>Problem Description</th>
+                <th>Status</th>
+                <th>Completed At</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for work in completed_work %}
+            <tr>
+                <td>{{ work.service_request.id }}</td>
+                <td>{{ work.service_request.vehicle }}</td>
+                <td>{{ work.service_request.customer.get_name }}</td>
+                <td>{{ work.service_request.problem_description }}</td>
+                <td>{{ work.status }}</td>
+                <td>{{ work.assigned_at }}</td>
+                <td>{{ work.cost }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
