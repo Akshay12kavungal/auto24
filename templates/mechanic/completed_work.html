@@ -28,7 +28,9 @@
                 <td>{{ work.assigned_at }}</td>
                 <td>{{ work.cost }}</td>
             </tr>
-            {% endfor %}
+            {% empty %}
+            <li>No completed work found.</li>
+        {% endfor %}
         </tbody>
     </table>
 </div>

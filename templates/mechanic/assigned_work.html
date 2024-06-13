@@ -11,7 +11,9 @@
             {{ work.service_request }} - {{ work.status }}
             <a href="{% url 'update_work_status' work.pk %}" class="btn btn-primary btn-sm">Update Status</a>
         </li>
-        {% endfor %}
+        {% empty %}
+        <li>No Assigned work found.</li>
+    {% endfor %}
     </ul>
 </div>
 {% endblock %}
