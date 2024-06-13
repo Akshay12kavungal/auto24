@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from admin_management.forms import LoginForm
-from .models import Customer, Vehicle, ServiceRequest, Feedback
+from .models import Customer, Notification, Vehicle, ServiceRequest, Feedback
 from .forms import UserForm, CustomerForm, VehicleForm, ServiceRequestForm, FeedbackForm
 from mechanic_management.models import Mechanic, MechanicWork
 
@@ -132,6 +132,13 @@ def customer_feedback(request):
     else:
         form = FeedbackForm()
     return render(request, 'customer/customer_feedback.html', {'form': form})
+
+
+@login_required
+def notification_list(request):
+    notifications = request.user.notifications.filter(is_read=False)
+    return render(request, 'customer/notification_list.html', {'notifications': notifications})
+
 
 
 def user_logout(request):
