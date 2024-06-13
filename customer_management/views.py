@@ -102,19 +102,22 @@ def delete_service_request(request, pk):
     return redirect('customer_home')
 
 
+@login_required
+def view_customer_profile(request):
+    customer = Customer.objects.get(user=request.user)
+    return render(request, 'customer/customer_profile.html', {'customer': customer})
 
 @login_required
-def customer_profile(request):
+def update_customer_profile(request):
     customer = Customer.objects.get(user=request.user)
     if request.method == 'POST':
         form = CustomerForm(request.POST, request.FILES, instance=customer)
         if form.is_valid():
             form.save()
-            return redirect('customer_home')
+            return redirect('view_customer_profile')
     else:
         form = CustomerForm(instance=customer)
-    return render(request, 'customer/customer_profile.html', {'form': form})
-
+    return render(request, 'customer/update_customer_profile.html', {'form': form})
 
 
 @login_required
