@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from admin_management.forms import LoginForm
 from customer_management.forms import UserForm
 from customer_management.models import Notification, ServiceRequest
-from .models import Mechanic, MechanicWork
+from .models import Mechanic, MechanicEarnings, MechanicWork
 from .forms import MechanicForm, UpdateWorkStatusForm
 from django.contrib.auth import authenticate, login,logout
 
@@ -57,6 +57,7 @@ def assigned_work(request):
     assigned_work = MechanicWork.objects.filter(mechanic=mechanic)
     return render(request, 'mechanic/assigned_work.html', {'assigned_work': assigned_work})
 
+
 @login_required
 def update_work_status(request, pk):
     mechanic = get_object_or_404(Mechanic, user=request.user)
@@ -65,14 +66,17 @@ def update_work_status(request, pk):
         form = UpdateWorkStatusForm(request.POST, instance=work)
         if form.is_valid():
             work = form.save(commit=False)
-            
-            # Update the status and cost of the associated service request
             service_request = work.service_request
-            if work.status in ['Repairing Done', 'Released']:
+            if work.status in ['Released']:
                 service_request.status = work.status
                 service_request.cost = form.cleaned_data['cost']
                 service_request.save()
-            
+                mechanic_earnings = MechanicEarnings.objects.create(
+                    mechanic=mechanic.user,
+                    amount=form.cleaned_data['cost'],
+                    service_request=service_request
+                )
+
             work.save()
             message = f"Your service request status has been updated to {service_request.status}."
             Notification.objects.create(recipient=service_request.customer.user, message=message)
@@ -81,8 +85,6 @@ def update_work_status(request, pk):
     else:
         form = UpdateWorkStatusForm(instance=work)
     return render(request, 'mechanic/update_work_status.html', {'form': form, 'work': work})
-           
-
 
 
 
@@ -115,7 +117,10 @@ def completed_work(request):
     )
     return render(request, 'mechanic/completed_work.html', {'completed_work': completed_work})
 
-
+@login_required
+def view_earnings(request):
+    mechanic_earnings = MechanicEarnings.objects.filter(mechanic=request.user)
+    return render(request, 'mechanic/earnings.html', {'mechanic_earnings': mechanic_earnings})
 
 def mechanic_logout(request):
     logout(request)
