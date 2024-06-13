@@ -1,16 +1,52 @@
 {% extends 'customer/base.html' %}
-
-{% block title %}Profile{% endblock %}
+{% block title %}Customer Profile{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-    <h1>Your Profile</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="mb-3">
-            {{ form.as_p }}
+    <h2>Customer Profile Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Personal Information</h5>
+            <dl class="row">
+                <dt class="col-sm-3">Username:</dt>
+                <dd class="col-sm-9">{{ customer.user.username }}</dd>
+
+                <dt class="col-sm-3">Email:</dt>
+                <dd class="col-sm-9">{{ customer.user.email }}</dd>
+
+                <dt class="col-sm-3">Name:</dt>
+                <dd class="col-sm-9">{{ customer.user.get_full_name }}</dd>
+            </dl>
         </div>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-    </form>
+    </div>
+
+    <div class="card mt-4">
+        <h5 class="card-header">Profile Picture</h5>
+        <div class="card-body text-center">
+            {% if customer.profile_pic %}
+            <img src="{{ customer.profile_pic.url }}" alt="Profile Picture" class="img-fluid"
+                style="max-width: 300px; max-height: 300px;">
+            {% else %}
+            <p class="text-muted">No profile picture available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Customer Details</h5>
+            <dl class="row">
+                <dt class="col-sm-3">Address:</dt>
+                <dd class="col-sm-9">{{ customer.address }}</dd>
+
+                <dt class="col-sm-3">Mobile:</dt>
+                <dd class="col-sm-9">{{ customer.mobile }}</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'update_customer_profile' %}" class="btn btn-primary">Update Profile</a>
+    </div>
 </div>
 {% endblock %}

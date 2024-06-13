@@ -80,10 +80,6 @@ def update_work_status(request, pk):
     return render(request, 'mechanic/update_work_status.html', {'form': form, 'work': work})
 
 
-@login_required
-def view_mechanic_profile(request, pk):
-    mechanic = get_object_or_404(Mechanic, pk=pk)
-    return render(request, 'mechanic/view_mechanic_profile.html', {'mechanic': mechanic})
 
 
 @login_required
