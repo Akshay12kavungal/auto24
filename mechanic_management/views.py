@@ -64,16 +64,16 @@ def update_work_status(request, pk):
     if request.method == 'POST':
         form = UpdateWorkStatusForm(request.POST, instance=work)
         if form.is_valid():
-            form.save()
+            work = form.save(commit=False)
             
-            # Update the status of the associated service request
+            # Update the status and cost of the associated service request
             service_request = work.service_request
-            if work.status == 'Repairing Done':
-                service_request.status = 'Repairing Done'
-            elif work.status == 'Released':
-                service_request.status = 'Released'
-            service_request.save()
+            if work.status in ['Repairing Done', 'Released']:
+                service_request.status = work.status
+                service_request.cost = form.cleaned_data['cost']
+                service_request.save()
             
+            work.save()
             return redirect('mechanic_home')
     else:
         form = UpdateWorkStatusForm(instance=work)
@@ -81,16 +81,41 @@ def update_work_status(request, pk):
 
 
 @login_required
-def mechanic_profile(request):
+def view_mechanic_profile(request, pk):
+    mechanic = get_object_or_404(Mechanic, pk=pk)
+    return render(request, 'mechanic/view_mechanic_profile.html', {'mechanic': mechanic})
+
+
+@login_required
+def view_mechanic_profile(request):
+    mechanic = Mechanic.objects.get(user=request.user)
+    return render(request, 'mechanic/mechanic_profile.html', {'mechanic': mechanic})
+
+@login_required
+def update_mechanic_profile(request):
     mechanic = Mechanic.objects.get(user=request.user)
     if request.method == 'POST':
         form = MechanicForm(request.POST, request.FILES, instance=mechanic)
         if form.is_valid():
             form.save()
-            return redirect('mechanic_home')
+            return redirect('view_mechanic_profile')
     else:
         form = MechanicForm(instance=mechanic)
-    return render(request, 'mechanic/mechanic_profile.html', {'form': form})
+    return render(request, 'mechanic/update_mechanic_profile.html', {'form': form})
+
+
+
+
+@login_required
+def completed_work(request):
+    mechanic = get_object_or_404(Mechanic, user=request.user)
+    completed_work = MechanicWork.objects.filter(
+        mechanic=mechanic, 
+        status__in=['Repairing Done', 'Released']
+    )
+    return render(request, 'mechanic/completed_work.html', {'completed_work': completed_work})
+
+
 
 def mechanic_logout(request):
     logout(request)
