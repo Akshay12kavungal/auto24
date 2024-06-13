@@ -1,6 +1,9 @@
+from decimal import Decimal
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+
+from customer_management.models import ServiceRequest
 
 class Mechanic(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -31,3 +34,20 @@ class MechanicWork(models.Model):
 
     def __str__(self):
         return f"Work on {self.service_request} by {self.mechanic.get_name}"
+
+
+class MechanicEarnings(models.Model):
+    mechanic = models.ForeignKey(User, on_delete=models.CASCADE, related_name='earnings')
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    service_request = models.ForeignKey(ServiceRequest, on_delete=models.CASCADE, related_name='earnings')
+    admin_commission = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        # Calculate admin commission (assuming 10% for example)
+        admin_percentage = Decimal('0.1')  # 10% commission as a Decimal
+        self.admin_commission = self.amount * admin_percentage
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Earnings of {self.mechanic.username} - ${self.amount}"

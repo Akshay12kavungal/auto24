@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Customer, Vehicle, ServiceRequest, Feedback
+from .models import Customer, Notification, Vehicle, ServiceRequest, Feedback
 
 from customer_management.models import Customer
 
@@ -26,3 +26,8 @@ class FeedbackAdmin(admin.ModelAdmin):
     list_display = ['customer', 'feedback', 'created_at']
     search_fields = ['customer__first_name', 'user__last_name', 'feedback']
     list_filter = ['created_at']
+@admin.register(Notification)
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('recipient', 'message', 'is_read', 'created_at')
+    list_filter = ('is_read', 'created_at')
+    search_fields = ('recipient__username', 'message')

@@ -1,0 +1,29 @@
+{% extends 'mechanic/base.html' %}
+
+{% block title %}Completed Work{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+<h1>Earnings Details</h1>
+<ul>
+    {% for earning in mechanic_earnings %}
+    <li>
+        <p>Earnings Amount: ${{ earning.amount }}</p>
+        <p>Service Request: {{ earning.service_request }}</p>
+        <p>Created At: {{ earning.created_at }}</p>
+    </li>
+    {% empty %}
+    <li>No earnings recorded yet.</li>
+    {% endfor %}
+</ul>
+
+<h2>Admin Commission</h2>
+<ul>
+    {% for earning in mechanic_earnings %}
+    <li>
+        <p>Admin Commission: ${{ earning.admin_commission }}</p>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
