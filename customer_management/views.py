@@ -13,7 +13,7 @@ def signup_customer(request):
         customer_form = CustomerForm(request.POST, request.FILES)
         if user_form.is_valid() and customer_form.is_valid():
             user = user_form.save(commit=False)
-            user.set_password(user_form.cleaned_data['password'])
+            user.set_password(user_form.cleaned_data['password1'])
             user.save()
             customer = customer_form.save(commit=False)
             customer.user = user
