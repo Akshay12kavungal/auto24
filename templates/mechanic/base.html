@@ -59,6 +59,7 @@
 
         main {
             flex: 1;
+            margin-bottom: 2rem; /* add margin-bottom to main */
         }
     </style>
 </head>
@@ -81,15 +82,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'completed_work' %}">Completed Work</a>
                         </li>
-                        
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'view_mechanic_profile' %}">Profile</a>
                         </li>
-                        
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'mechanic_logout' %}">Logout</a>
                         </li>
-                        
                         <!-- Add more navigation links here -->
                     </ul>
                 </div>
