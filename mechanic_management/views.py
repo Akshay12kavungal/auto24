@@ -16,7 +16,7 @@ def signup_mechanic(request):
         mechanic_form = MechanicForm(request.POST, request.FILES)
         if user_form.is_valid() and mechanic_form.is_valid():
             user = user_form.save(commit=False)
-            user.set_password(user_form.cleaned_data['password'])
+            user.set_password(user_form.cleaned_data['password1'])
             user.save()
             mechanic = mechanic_form.save(commit=False)
             mechanic.user = user

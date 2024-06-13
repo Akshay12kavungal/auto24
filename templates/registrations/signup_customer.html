@@ -1,25 +1,79 @@
 {% extends 'base.html' %}
 
-{% block title %}Customer Signup{% endblock %}
+{% block title %}Customer Registration{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-6">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
             <div class="card">
-                <div class="card-header">
-                    <h1 class="card-title">Customer Signup</h1>
+                <div class="card-header bg-primary text-white">
+                    <h1 class="card-title text-center">Customer Registration</h1>
                 </div>
                 <div class="card-body">
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <div class="mb-3">
-                            {{ user_form.as_p }}
+                        <div class="mb-3 row">
+                            <label for="id_first_name" class="col-sm-3 col-form-label">First Name:</label>
+                            <div class="col-sm-9">
+                                {{ user_form.first_name }}
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            {{ customer_form.as_p }}
+                        <div class="mb-3 row">
+                            <label for="id_last_name" class="col-sm-3 col-form-label">Last Name:</label>
+                            <div class="col-sm-9">
+                                {{ user_form.last_name }}
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Signup</button>
+                        <div class="mb-3 row">
+                            <label for="id_username" class="col-sm-3 col-form-label">Username:</label>
+                            <div class="col-sm-9">
+                                {{ user_form.username }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="id_email" class="col-sm-3 col-form-label">Email:</label>
+                            <div class="col-sm-9">
+                                {{ user_form.email }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="id_password1" class="col-sm-3 col-form-label">Password:</label>
+                            <div class="col-sm-9">
+                                {{ user_form.password1 }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="id_password2" class="col-sm-3 col-form-label">Confirm Password:</label>
+                            <div class="col-sm-9">
+                                {{ user_form.password2 }}
+                            </div>
+                        </div>
+                        <hr>
+                        <h4 class="mb-3">Customer Information</h4>
+                        <div class="mb-3 row">
+                            <label for="id_profile_pic" class="col-sm-3 col-form-label">Profile Picture:</label>
+                            <div class="col-sm-9">
+                                {{ customer_form.profile_pic }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="id_address" class="col-sm-3 col-form-label">Address:</label>
+                            <div class="col-sm-9">
+                                {{ customer_form.address }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="id_mobile" class="col-sm-3 col-form-label">Mobile:</label>
+                            <div class="col-sm-9">
+                                {{ customer_form.mobile }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-sm-9 offset-sm-3">
+                                <button type="submit" class="btn btn-primary">Register</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

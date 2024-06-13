@@ -3,9 +3,12 @@ from django.contrib.auth.models import User
 from .models import Customer, Vehicle, ServiceRequest, Feedback
 
 class UserForm(forms.ModelForm):
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
+
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'email', 'password']
+        fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
 
 class CustomerForm(forms.ModelForm):
     class Meta:
