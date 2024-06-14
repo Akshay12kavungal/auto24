@@ -17,6 +17,6 @@ urlpatterns = [
     path('logout/', views.mechanic_logout, name='mechanic_logout'),
 
 #api
-   path('api/',include("mechanic_management.api.urls"))
+   path('api/mechanic/',include("mechanic_management.api.urls"))
 
 ]

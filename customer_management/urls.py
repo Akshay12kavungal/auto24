@@ -25,5 +25,5 @@ urlpatterns = [
 
 #api
 
-    path('api/',include("customer_management.api.urls"))
+    path('api/customer/',include("customer_management.api.urls"))
 ]

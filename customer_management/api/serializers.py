@@ -3,10 +3,6 @@ from rest_framework import serializers
 from customer_management.models import Customer, Feedback, Notification, ServiceRequest, Vehicle
 
 
-class CustomerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Customer
-        fields="__all__"
 
 class VehicleSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,3 +24,13 @@ class NotificationSerializer(serializers.ModelSerializer):
         model=Notification
         fields="__all__"
 
+class CustomerSerializer(serializers.ModelSerializer):
+    vehicles = VehicleSerializer(many=True, read_only=True)
+    service_requests = ServiceRequestSerializer(many=True, read_only=True)
+    
+
+    class Meta:
+        model = Customer
+        fields = "__all__"
+        
+    
