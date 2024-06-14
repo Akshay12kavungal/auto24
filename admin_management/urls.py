@@ -1,5 +1,5 @@
 
-from django.urls import path
+from django.urls import include, path
 
 from . import views
 
@@ -22,4 +22,7 @@ urlpatterns = [
 #mechanic crud
     path('edit-mechanic/<int:pk>/', views.edit_mechanic, name='edit_mechanic'),
     path('delete-mechanic/<int:pk>/', views.delete_mechanic, name='delete_mechanic'),
+
+#api
+    path("api/", include("admin_management.api.urls")),
 ]
