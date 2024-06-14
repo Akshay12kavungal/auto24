@@ -24,5 +24,5 @@ urlpatterns = [
     path('delete-mechanic/<int:pk>/', views.delete_mechanic, name='delete_mechanic'),
 
 #api
-    path("api/", include("admin_management.api.urls")),
+    path("api/admin/", include("admin_management.api.urls")),
 ]
