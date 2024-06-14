@@ -1,5 +1,6 @@
-from django.urls import path
+from django.urls import include, path
 from . import views
+import customer_management
 
 urlpatterns = [
     path('signup/customer/', views.signup_customer, name='signup_customer'),
@@ -22,5 +23,7 @@ urlpatterns = [
 
     path('logout/', views.user_logout, name='user_logout'),
 
+#api
 
+    path('api/',include("customer_management.api.urls"))
 ]
