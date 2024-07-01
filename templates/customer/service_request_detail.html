@@ -3,10 +3,48 @@
 {% block title %}Service Request Details{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1>Service Request Details</h1>
-    <div class="card mt-3">
+<style>
+    /* Custom styling for container */
+    
+
+    /* Custom styling for card */
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        padding: 30px;
+    }
+
+    /* Custom styling for headings and text */
+    h1 {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* Custom styling for buttons */
+    .btn-secondary {
+        background-color: #007bff;
+        color: white;
+        border: none;
+    }
+
+    .btn-secondary:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="container">
+    <div class="card mt-4">
         <div class="card-body">
+            <h1 class="card-title">Service Request Details</h1>
             <p class="card-text"><strong>Vehicle:</strong> {{ service_request.vehicle }}</p>
             <p class="card-text"><strong>Problem Description:</strong> {{ service_request.problem_description }}</p>
             <p class="card-text"><strong>Status:</strong> {{ service_request.status }}</p>

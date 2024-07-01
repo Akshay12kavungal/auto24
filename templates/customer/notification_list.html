@@ -2,21 +2,51 @@
 {% block title %}Notifications{% endblock %}
 
 {% block content %}
+<style>
+
+
+    /* Custom styling for heading */
+    h1 {
+        margin-bottom: 20px;
+       
+    }
+
+    /* Custom styling for list group */
+    .list-group {
+        margin-top: 20px;
+    }
+
+    /* Custom styling for list group items */
+    .list-group-item {
+        background-color: #f8f9fa; /* Bootstrap light gray background */
+        border-color: #dee2e6; /* Bootstrap light gray border */
+    }
+
+    /* Custom styling for notification message */
+    .notification-message {
+        flex: 1; /* Take remaining space */
+    }
+
+    /* Custom styling for notification timestamp */
+    .notification-timestamp {
+        color: #6c757d; /* Bootstrap secondary color */
+    }
+</style>
+
 <div class="container mt-4">
-  <h1 class="mb-4">Notifications</h1>
+    <h1 class="mb-4">Notifications</h1>
   
-  {% if notifications %}
-    <div class="list-group">
-      {% for notification in notifications %}
-        <div class="list-group-item d-flex justify-content-between align-items-center">
-          <span>{{ notification.message }}</span>
-          <span>{{ notification.created_at }}</span>
-          
+    {% if notifications %}
+        <div class="list-group">
+            {% for notification in notifications %}
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <span class="notification-message">{{ notification.message }}</span>
+                    <span class="notification-timestamp">{{ notification.created_at }}</span>
+                </div>
+            {% endfor %}
         </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <p class="text-muted">No new notifications.</p>
-  {% endif %}
+    {% else %}
+        <p class="text-muted">No new notifications.</p>
+    {% endif %}
 </div>
 {% endblock %}

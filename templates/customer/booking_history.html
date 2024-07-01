@@ -1,9 +1,71 @@
 {% extends 'customer/base.html' %}
+
 {% block title %}Booking History{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container mt-4" style="background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <style>
+        /* Custom styling for container */
+       
+
+        h1 {
+            color: #111111;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #717375;
+            color: white;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-view-details {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 12px; /* Adjust padding for button size */
+            font-size: 14px; /* Adjust font size for button text */
+        }
+
+        .btn-view-details:hover {
+            background-color: #5a6268;
+        }
+    </style>
+
     <h1>Booking History</h1>
+
     <div class="row mt-3">
         {% if service_requests %}
         <table class="table">
@@ -23,7 +85,7 @@
                     <td>{{ request.vehicle }}</td>
                     <td>{{ request.status }}</td>
                     <td>{{ request.cost }}</td>
-                    <td><a href="{% url 'service_request_detail' request.id %}" class="btn btn-primary btn-sm">View Details</a></td>
+                    <td><a href="{% url 'service_request_detail' request.id %}" class="btn btn-view-details btn-sm">View Details</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -32,6 +94,7 @@
         <p>No service requests found.</p>
         {% endif %}
     </div>
-    <a href="{% url 'customer_home' %}" class="btn btn-secondary mt-3">Back to Home</a>
+
+    <a href="{% url 'customer_home' %}" class="btn btn-primary mt-3">Back to Home</a>
 </div>
 {% endblock %}

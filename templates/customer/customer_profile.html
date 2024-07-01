@@ -2,8 +2,64 @@
 {% block title %}Customer Profile{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2>Customer Profile Details</h2>
+<style>
+    
+
+    /* Custom styling for card */
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        color: #007bff; /* Bootstrap primary color for card titles */
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    h1 {
+        
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-left: 20px;
+        
+    }
+
+
+    /* Custom styling for definition list */
+    dl.row {
+        margin-bottom: 0;
+    }
+
+    dt.col-sm-3 {
+        font-weight: bold;
+    }
+
+    /* Custom styling for profile picture */
+    .profile-picture {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+    }
+
+    /* Custom styling for update profile button */
+    .btn-update-profile {
+        margin-top: 20px;
+    }
+
+   
+</style>
+
+<div class="container">
+   
+    <h1>Customer Profile Details</h1>
+  
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Personal Information</h5>
@@ -24,8 +80,7 @@
         <h5 class="card-header">Profile Picture</h5>
         <div class="card-body text-center">
             {% if customer.profile_pic %}
-            <img src="{{ customer.profile_pic.url }}" alt="Profile Picture" class="img-fluid"
-                style="max-width: 300px; max-height: 300px;">
+            <img src="{{ customer.profile_pic.url }}" alt="Profile Picture" class="img-fluid profile-picture">
             {% else %}
             <p class="text-muted">No profile picture available.</p>
             {% endif %}
@@ -46,7 +101,7 @@
     </div>
 
     <div class="mt-4">
-        <a href="{% url 'update_customer_profile' %}" class="btn btn-primary">Update Profile</a>
+        <a href="{% url 'update_customer_profile' %}" class="btn btn-primary btn-update-profile">Update Profile</a>
     </div>
 </div>
 {% endblock %}
