@@ -1,0 +1,37 @@
+{% extends 'customer/base.html' %}
+{% block title %}Booking History{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Booking History</h1>
+    <div class="row mt-3">
+        {% if service_requests %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Service Request ID</th>
+                    <th>Vehicle</th>
+                    <th>Status</th>
+                    <th>Cost</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in service_requests %}
+                <tr>
+                    <td>{{ request.id }}</td>
+                    <td>{{ request.vehicle }}</td>
+                    <td>{{ request.status }}</td>
+                    <td>{{ request.cost }}</td>
+                    <td><a href="{% url 'service_request_detail' request.id %}" class="btn btn-primary btn-sm">View Details</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No service requests found.</p>
+        {% endif %}
+    </div>
+    <a href="{% url 'customer_home' %}" class="btn btn-secondary mt-3">Back to Home</a>
+</div>
+{% endblock %}
