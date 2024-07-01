@@ -2,8 +2,54 @@
 {% block title %}Mechanic Profile{% endblock %}
 
 {% block content %}
+<style>
+    /* Custom styling for cards */
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        color: #007bff; /* Bootstrap primary color for card titles */
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+    h2 
+    {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* Custom styling for profile picture */
+    .profile-picture {
+        max-height: 300px;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+    }
+
+    /* Custom styling for definition list */
+    dl.row {
+        margin-bottom: 0;
+    }
+
+    dt.col-sm-3 {
+        font-weight: bold;
+    }
+
+    /* Custom styling for update profile button */
+    .btn-update-profile {
+        margin-top: 20px;
+    }
+</style>
+
 <div class="container mt-4">
     <h2>Mechanic Profile Details</h2>
+
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Personal Information</h5>
@@ -24,7 +70,7 @@
         <h5 class="card-header">Profile Picture</h5>
         <div class="card-body text-center">
             {% if mechanic.profile_pic %}
-            <img src="{{ mechanic.profile_pic.url }}" alt="Profile Picture" class="img-fluid" style="max-height: 300px;">
+            <img src="{{ mechanic.profile_pic.url }}" alt="Profile Picture" class="img-fluid profile-picture">
             {% else %}
             <p class="text-muted">No profile picture available.</p>
             {% endif %}
@@ -46,8 +92,9 @@
             </dl>
         </div>
     </div>
+
     <div class="mt-4">
-        <a href="{% url 'update_mechanic_profile' %}" class="btn btn-primary">Update Profile</a>
+        <a href="{% url 'update_mechanic_profile' %}" class="btn btn-primary btn-update-profile">Update Profile</a>
     </div>
 </div>
 {% endblock %}
