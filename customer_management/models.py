@@ -38,7 +38,7 @@ class ServiceRequest(models.Model):
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='service_requests')
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE, related_name='service_requests')
-    problem_description = models.TextField()
+    problem_description = models.CharField(max_length=300)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
     cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
@@ -50,7 +50,7 @@ class Feedback(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='feedbacks')
     mechanic = models.ForeignKey('mechanic_management.Mechanic', on_delete=models.CASCADE, related_name='feedbacks')
     rating = models.IntegerField()
-    feedback = models.TextField()
+    feedback = models.CharField(max_length=100)
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
