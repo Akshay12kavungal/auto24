@@ -89,10 +89,6 @@ def service_request_detail(request, pk):
     mechanic_work = MechanicWork.objects.filter(service_request=service_request).first()
     return render(request, 'customer/service_request_detail.html', {'service_request': service_request, 'mechanic_work': mechanic_work})
 
-def my_services(request):
-    customer = Customer.objects.get(user=request.user)
-    service_requests = ServiceRequest.objects.filter(customer=customer)
-    return render(request,'customer/my_services.html', {'service_requests': service_requests})
 
 @login_required
 def delete_service_request(request, pk):
@@ -139,7 +135,11 @@ def notification_list(request):
     notifications = request.user.notifications.filter(is_read=False)
     return render(request, 'customer/notification_list.html', {'notifications': notifications})
 
-
+@login_required
+def booking_history(request):
+    customer = Customer.objects.get(user=request.user)
+    service_requests = ServiceRequest.objects.filter(customer=customer)
+    return render(request, 'customer/booking_history.html', {'service_requests': service_requests})
 
 def user_logout(request):
     logout(request)

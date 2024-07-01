@@ -16,7 +16,7 @@ urlpatterns = [
     
     path('customer/service-request/delete/<int:pk>/', views.delete_service_request, name='delete_service_request'),
     path('customer/feedback/', views.customer_feedback, name='customer_feedback'),
-    path('customer/my_services/', views.my_services, name='my_services'),
+    path('customer/booking-history/', views.booking_history, name='booking_history'),
 
     path('list/', views.notification_list, name='notification_list'),
    
