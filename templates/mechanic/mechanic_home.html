@@ -52,40 +52,73 @@
         {% endif %}
     </div>
 
-    <!-- Services Section -->
-    <div class="container mt-4">
-        <h2>Our Services</h2>
-        <div class="row">
-            <div class="col-md-4 service-card">
-                <div class="card h-100" style="display: flex; flex-direction: column;">
-                    <img src="{% static 'images/service/oil.avif' %}" class="card-img-top" alt="Service 1" style="width: 100%; height: 200px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">Oil Change</h5>
-                        <p class="card-text">Regular oil changes are essential to keep your car running smoothly. Book an appointment with one of our trusted service stations.</p>
-                        <a href="#" class="btn btn-primary" style="margin-top: auto;">Learn More</a>
-                    </div>
+   <!-- Services Section -->
+<div class="container mt-4">
+    <h2>Our Services</h2>
+    <div class="row">
+        <div class="col-md-4 service-card">
+            <div class="card h-100" style="display: flex; flex-direction: column;">
+                <img src="{% static 'images/service/wr8.jpg' %}" class="card-img-top" alt="Rent Cars" style="width: 100%; height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Rent Cars</h5>
+                    <p class="card-text">Find the best deals on car rentals. Explore our extensive range of vehicles and choose the one that suits your needs.</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: auto;">Learn More</a>
                 </div>
             </div>
-            <div class="col-md-4 service-card">
-                <div class="card h-100" style="display: flex; flex-direction: column;">
-                    <img src="{% static 'images/service/brake.avif' %}" class="card-img-top" alt="Service 2" style="width: 100%; height: 200px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">Brake Service</h5>
-                        <p class="card-text">Ensure your safety with our top-notch brake services. Find a nearby service station to get your brakes checked today.</p>
-                        <a href="#" class="btn btn-primary" style="margin-top: auto;">Learn More</a>
-                    </div>
+        </div>
+        <div class="col-md-4 service-card">
+            <div class="card h-100" style="display: flex; flex-direction: column;">
+                <img src="{% static 'images/service/wr3.jpg' %}" class="card-img-top" alt="Mechanic Work" style="width: 100%; height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Mechanic Work</h5>
+                    <p class="card-text">Get your vehicle serviced by experienced mechanics. Find a trusted mechanic near you.</p>
+                    <a href="{% url 'fill_vehicle_details' %}" class="btn btn-primary" style="margin-top: auto;">Learn More</a>
                 </div>
             </div>
-            <div class="col-md-4 service-card">
-                <div class="card h-100">
-                    <img src="{% static 'images/service/tyre.avif' %}" class="card-img-top" alt="Service 3" style="width: 100%; height: 200px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">Tire Replacement</h5>
-                        <p class="card-text">Get the best deals on tire replacements. Visit one of our service stations to keep your vehicle in top condition.</p>
-                        <a href="#" class="btn btn-primary">Learn More</a>
-                    </div>
+        </div>
+        <div class="col-md-4 service-card">
+            <div class="card h-100" style="display: flex; flex-direction: column;">
+                <img src="{% static 'images/service/tyre.avif' %}" class="card-img-top" alt="Car Wash" style="width: 100%; height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Car Wash</h5>
+                    <p class="card-text">Keep your car sparkling clean with our professional car wash services. Book an appointment today.</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: auto;">Learn More</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-4 service-card">
+            <div class="card h-100" style="display: flex; flex-direction: column;">
+                <img src="{% static 'images/service/spare1.jpg' %}" class="card-img-top" alt="Spare Part Work" style="width: 100%; height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Spare Part Work</h5>
+                    <p class="card-text">Find and replace spare parts for your vehicle. Our experts will help you find the right parts.</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: auto;">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 service-card">
+            <div class="card h-100" style="display: flex; flex-direction: column;">
+                <img src="{% static 'images/service/oil.avif' %}" class="card-img-top" alt="Oil Change" style="width: 100%; height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Oil Change</h5>
+                    <p class="card-text">Regular oil changes are essential to keep your car running smoothly. Book an appointment with one of our trusted service stations.</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: auto;">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 service-card">
+            <div class="card h-100" style="display: flex; flex-direction: column;">
+                <img src="{% static 'images/service/brake.avif' %}" class="card-img-top" alt="Brake Service" style="width: 100%; height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Brake Service</h5>
+                    <p class="card-text">Ensure your safety with our top-notch brake services. Find a nearby service station to get your brakes checked today.</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: auto;">Learn More</a>
                 </div>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
