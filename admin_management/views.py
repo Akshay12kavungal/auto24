@@ -2,7 +2,8 @@ from django import forms
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
-from admin_management.forms import LoginForm
+from admin_management.forms import LoginForm, RentalCarForm
+from admin_management.models import RentalCar
 from customer_management.forms import CustomerForm, UserForm
 from customer_management.models import Customer, Vehicle, ServiceRequest, Feedback
 from django.contrib.admin.views.decorators import staff_member_required
@@ -128,6 +129,37 @@ def assign_mechanic(request, pk):
     return render(request, 'adminpage/assign_mechanic.html', {'service_request': service_request, 'mechanics': mechanics})
 
 
+def rental_car_list(request):
+    rental_cars = RentalCar.objects.all()
+    return render(request, 'adminpage/rental_cars/rental_car_list.html', {'rental_cars': rental_cars})
+
+def add_rental_car(request):
+    if request.method == 'POST':
+        form = RentalCarForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('rental_car_list')  # Redirect to list view after successful creation
+    else:
+        form = RentalCarForm()
+    return render(request, 'adminpage/rental_cars/add_rental_car.html', {'form': form})
+
+def edit_rental_car(request, pk):
+    rental_car = get_object_or_404(RentalCar, pk=pk)
+    if request.method == 'POST':
+        form = RentalCarForm(request.POST, request.FILES, instance=rental_car)
+        if form.is_valid():
+            form.save()
+            return redirect('rental_car_list')  # Redirect to list view after successful update
+    else:
+        form = RentalCarForm(instance=rental_car)
+    return render(request, 'adminpage/rental_cars/edit_rental_car.html', {'form': form})
+
+def delete_rental_car(request, pk):
+    rental_car = get_object_or_404(RentalCar, pk=pk)
+    if request.method == 'POST':
+        rental_car.delete()
+        return redirect('rental_car_list')  # Redirect to list view after successful deletion
+    return render(request, 'adminpage/rental_cars/delete_rental_car.html', {'rental_car': rental_car})
 
 
 def admin_logout(request):

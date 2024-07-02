@@ -1,0 +1,42 @@
+<!-- delete_booking.html -->
+
+{% extends 'customer/base.html' %}
+
+{% block title %}Delete Booking - Auto24{% endblock %}
+
+{% block content %}
+<style>
+    /* Custom styling for the delete booking page */
+    .confirmation-container {
+        margin-top: 20px;
+        background-color: #fff; /* White background */
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    }
+
+    .confirmation-container h1 {
+        margin-bottom: 20px; /* Space below heading */
+    }
+
+    .confirmation-container p {
+        margin-bottom: 20px; /* Space below paragraph */
+    }
+
+    .btn-container {
+        margin-top: 20px; /* Space above buttons */
+    }
+</style>
+
+<div class="container mt-4 confirmation-container">
+    <h1>Delete Booking</h1>
+    <p>Are you sure you want to delete booking "{{ booking.rental_car }}"?</p>
+    <div class="btn-container">
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a href="{% url 'booking_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

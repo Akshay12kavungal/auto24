@@ -1,0 +1,54 @@
+{% extends 'adminpage/base.html' %}
+{% block title %}Delete Rental Car - {{ rental_car.name }}{% endblock %}
+
+{% block content %}
+<style>
+    /* Custom styling for content */
+    .container {
+       
+        margin-top: 20px;
+       
+    }
+
+    h2 {
+       
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+    }
+
+    /* Custom styling for buttons */
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+    }
+</style>
+
+<div class="container">
+    <h2>Delete Rental Car - {{ rental_car.name }}</h2>
+    <p>Are you sure you want to delete this rental car?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="{% url 'rental_car_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
