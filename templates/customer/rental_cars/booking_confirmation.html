@@ -1,0 +1,13 @@
+<!-- booking_confirmation.html -->
+
+{% extends 'customer/base.html' %}
+{% block title %}Booking Confirmation{% endblock %}
+
+{% block content %}
+  <h1>Booking Confirmation</h1>
+  <p>Rental Car: {{ booking.rental_car.name }}</p>
+  <p>Start Date: {{ booking.start_date }}</p>
+  <p>End Date: {{ booking.end_date }}</p>
+  <p>Total Price: ${{ booking.total_price }}</p>
+  <p>Thank you for your booking!</p>
+{% endblock %}

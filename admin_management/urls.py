@@ -23,6 +23,14 @@ urlpatterns = [
     path('edit-mechanic/<int:pk>/', views.edit_mechanic, name='edit_mechanic'),
     path('delete-mechanic/<int:pk>/', views.delete_mechanic, name='delete_mechanic'),
 
+
+#rental car
+
+    path('adminpage/rental-cars/', views.rental_car_list, name='rental_car_list'),
+    path('adminpage/add-rental-car/', views.add_rental_car, name='add_rental_car'),
+    path('adminpage/edit-rental-car/<int:pk>/', views.edit_rental_car, name='edit_rental_car'),
+    path('adminpage/delete-rental-car/<int:pk>/', views.delete_rental_car, name='delete_rental_car'),
+
 #api
     path("api/admin/", include("admin_management.api.urls")),
 ]
