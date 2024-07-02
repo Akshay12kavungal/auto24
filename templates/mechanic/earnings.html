@@ -3,27 +3,71 @@
 {% block title %}Completed Work{% endblock %}
 
 {% block content %}
+<style>
+    /* Custom styling for container */
+    .earnings-container {
+        background-color: #f8f9fa; /* Light grey background */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    /* Custom styling for earnings list */
+    .earnings-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    /* Custom styling for earnings list item */
+    .earnings-item {
+        margin-bottom: 20px;
+        border: 1px solid #ced4da; /* Light border color */
+        background-color: #fff; /* White background */
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Custom styling for headings */
+    h1, h2 {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        margin-top: 20px;
+        color: #000000; /* Bootstrap primary color */
+    }
+
+    /* Style for empty message */
+    .empty-message {
+        color: #6c757d; /* Bootstrap secondary color */
+    }
+</style>
+
 <div class="container mt-4">
-<h1>Earnings Details</h1>
-<ul>
-    {% for earning in mechanic_earnings %}
-    <li>
-        <p>Earnings Amount: ${{ earning.amount }}</p>
-        <p>Service Request: {{ earning.service_request }}</p>
-        <p>Created At: {{ earning.created_at }}</p>
-    </li>
-    {% empty %}
-    <li>No earnings recorded yet.</li>
-    {% endfor %}
-</ul>
+    <div class="earnings-container">
+        <h1>Earnings Details</h1>
+        <ul class="earnings-list">
+            {% for earning in mechanic_earnings %}
+            <li class="earnings-item">
+                <p>Earnings Amount: ${{ earning.amount }}</p>
+                <p>Service Request: {{ earning.service_request }}</p>
+                <p>Created At: {{ earning.created_at }}</p>
+            </li>
+            {% empty %}
+            <li class="empty-message">No earnings recorded yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
 
-<h2>Admin Commission</h2>
-<ul>
-    {% for earning in mechanic_earnings %}
-    <li>
-        <p>Admin Commission: ${{ earning.admin_commission }}</p>
-    </li>
-    {% endfor %}
-</ul>
-
+    <div class="earnings-container">
+        <h2>Admin Commission</h2>
+        <ul class="earnings-list">
+            {% for earning in mechanic_earnings %}
+            <li class="earnings-item">
+                <p>Admin Commission: ${{ earning.admin_commission }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock %}

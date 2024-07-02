@@ -3,35 +3,82 @@
 {% block title %}Completed Work{% endblock %}
 
 {% block content %}
+<style>
+    /* Custom styling for container */
+    .work-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    /* Custom styling for table */
+    .work-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* Custom styling for table header */
+    .work-table th {
+        background-color: #4a4c4e;
+        color: white;
+        text-align: left;
+        padding: 10px;
+    }
+
+    /* Custom styling for table body */
+    .work-table td {
+        padding: 10px;
+    }
+
+    /* Custom styling for striped rows */
+    .work-table tbody tr:nth-of-type(odd) {
+        background-color: #f2f2f2;
+    }
+
+    /* Custom styling for no completed work message */
+    .no-completed-work {
+        margin-top: 10px;
+        color: #888;
+    }
+</style>
+
 <div class="container mt-4">
-    <h1>Completed Work</h1>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Service Request</th>
-                <th>Vehicle</th>
-                <th>Customer</th>
-                <th>Problem Description</th>
-                <th>Status</th>
-                <th>Completed At</th>
-                <th>Cost</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for work in completed_work %}
-            <tr>
-                <td>{{ work.service_request.id }}</td>
-                <td>{{ work.service_request.vehicle }}</td>
-                <td>{{ work.service_request.customer.get_name }}</td>
-                <td>{{ work.service_request.problem_description }}</td>
-                <td>{{ work.status }}</td>
-                <td>{{ work.assigned_at }}</td>
-                <td>{{ work.cost }}</td>
-            </tr>
-            {% empty %}
-            <li>No completed work found.</li>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="work-container">
+        <h1>Completed Work</h1>
+        <table class="work-table table-striped">
+            <thead>
+                <tr>
+                    <th>Service Request</th>
+                    <th>Vehicle</th>
+                    <th>Customer</th>
+                    <th>Problem Description</th>
+                    <th>Status</th>
+                    <th>Completed At</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for work in completed_work %}
+                <tr>
+                    <td>{{ work.service_request.id }}</td>
+                    <td>{{ work.service_request.vehicle }}</td>
+                    <td>{{ work.service_request.customer.get_name }}</td>
+                    <td>{{ work.service_request.problem_description }}</td>
+                    <td>{{ work.status }}</td>
+                    <td>{{ work.assigned_at }}</td>
+                    <td>{{ work.cost }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="no-completed-work">No completed work found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}
