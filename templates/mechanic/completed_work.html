@@ -68,9 +68,17 @@
                     <td>{{ work.service_request.vehicle }}</td>
                     <td>{{ work.service_request.customer.get_name }}</td>
                     <td>{{ work.service_request.problem_description }}</td>
-                    <td>{{ work.status }}</td>
+                    <td>
+                        {% if work.status == 'Repairing' %}
+                            <span class="badge badge-warning">{{ work.status }}</span>
+                        {% elif work.status == 'Repairing Done' %}
+                            <span class="badge badge-success">{{ work.status }}</span>
+                        {% elif work.status == 'Released' %}
+                            <span class="badge badge-info">{{ work.status }}</span>
+                        {% endif %}
+                    </td>
                     <td>{{ work.assigned_at }}</td>
-                    <td>{{ work.cost }}</td>
+                    <td>${{ work.cost }}</td>
                 </tr>
                 {% empty %}
                 <tr>

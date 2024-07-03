@@ -11,7 +11,7 @@ class Mechanic(models.Model):
     address = models.CharField(max_length=40)
     mobile = models.CharField(max_length=20, null=False)
     skill = models.CharField(max_length=500, null=True)
-    salary = models.PositiveIntegerField(null=True)
+    salary = models.IntegerField(null=True)
     status = models.BooleanField(default=False)
 
     @property

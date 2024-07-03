@@ -12,6 +12,8 @@ urlpatterns = [
     path('adminpage/approve-mechanic/<int:pk>/', views.approve_mechanic, name='approve_mechanic'),
     path('adminpage/manage-service-requests/', views.manage_service_requests, name='manage_service_requests'),
     path('adminpage/approve-service-request/<int:pk>/', views.approve_service_request, name='approve_service_request'),
+    path('adminpage/service-request/delete/<int:pk>/', views.delete_service_request, name='delete_service_request'),
+
     path('adminpage/assign-mechanic/<int:pk>/', views.assign_mechanic, name='assign_mechanic'),
     path('logout/', views.admin_logout, name='admin_logout'),
    

@@ -115,6 +115,20 @@ def approve_service_request(request, pk):
     service_request.save()
     return redirect('manage_service_requests')
 
+
+
+def delete_service_request(request, pk):
+    service_request = get_object_or_404(ServiceRequest, pk=pk)
+    
+    if request.method == 'POST':
+        service_request.delete()
+        return redirect('manage_service_requests')
+    return render(request, 'adminpage/delete_service.html', {'service_request': service_request})
+
+
+
+
+
 @staff_member_required
 def assign_mechanic(request, pk):
     service_request = ServiceRequest.objects.get(pk=pk)

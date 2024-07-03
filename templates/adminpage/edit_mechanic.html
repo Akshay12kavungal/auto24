@@ -3,13 +3,81 @@
 {% block title %}Edit Mechanic{% endblock %}
 
 {% block content %}
-<div class="mt-4">
-    <h1>Edit Mechanic</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        <a href="{% url 'manage_mechanics' %}" class="btn btn-secondary">Cancel</a>
-    </form>
+<style>
+    /* Custom styling for form container */
+    .edit-form-container {
+        background-color: #fff; /* White background */
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+        margin-top: 20px;
+    }
+
+    /* Custom styling for form title */
+    .edit-form-container h1 {
+        margin-bottom: 20px; /* Space below heading */
+        margin-top: 20px; /* Space above heading */
+    }
+
+    /* Custom styling for form input fields */
+    .edit-form-container input[type=text], 
+    .edit-form-container input[type=email],
+    .edit-form-container input[type=number],
+    .edit-form-container input[type=file],
+    .edit-form-container select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+
+ 
+    /* Custom styling for form buttons */
+    .edit-form-container button[type=submit],
+    .edit-form-container a.btn {
+        margin-top: 10px; /* Space above buttons */
+        margin-right: 10px; /* Space between buttons */
+    }
+
+    /* Primary button */
+    .edit-form-container button[type=submit] {
+        background-color: #007bff; /* Blue background */
+        color: white; /* White text */
+        border: none; /* No border */
+        border-radius: 4px; /* Rounded corners */
+        padding: 10px 20px; /* Padding inside button */
+        cursor: pointer; /* Pointer cursor on hover */
+    }
+
+    .edit-form-container button[type=submit]:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    /* Secondary button */
+    .edit-form-container a.btn {
+        background-color: #6c757d; /* Gray background */
+        color: white; /* White text */
+        border: none; /* No border */
+        border-radius: 4px; /* Rounded corners */
+        padding: 10px 20px; /* Padding inside button */
+        text-decoration: none; /* No underline on link */
+    }
+
+    .edit-form-container a.btn:hover {
+        background-color: #5a6268; /* Darker gray on hover */
+    }
+</style>
+<div class="container mt-4">
+    <div class="edit-form-container">
+        <h1>Edit Mechanic</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{% url 'manage_mechanics' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
 </div>
 {% endblock %}

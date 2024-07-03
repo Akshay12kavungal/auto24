@@ -15,8 +15,8 @@ urlpatterns = [
     path('fill-vehicle-details/', views.fill_vehicle_details, name='fill_vehicle_details'),
     path('customer/service-request/', views.make_service_request, name='make_service_request'),
     path('service-request/<int:pk>/', views.service_request_detail, name='service_request_detail'),
+
     
-    path('customer/service-request/delete/<int:pk>/', views.delete_service_request, name='delete_service_request'),
     path('customer/feedback/', views.customer_feedback, name='customer_feedback'),
     path('customer/booking-history/', views.booking_history, name='booking_history'),
     path('customer/list/', views.notification_list, name='notification_list'),

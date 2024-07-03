@@ -3,41 +3,134 @@
 {% block title %}Manage Service Requests{% endblock %}
 
 {% block content %}
+<style>
+    /* Custom styling for service request container */
+    .service-request-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    /* Custom styling for service request table */
+    .service-request-container table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* Custom styling for table header */
+    .service-request-container th {
+        background-color: #535557;
+        color: white;
+        text-align: left;
+        padding: 10px;
+    }
+
+    /* Custom styling for table body */
+    .service-request-container td {
+        padding: 10px;
+    }
+
+    /* Custom styling for striped rows */
+    .service-request-container tbody tr:nth-of-type(odd) {
+        background-color: #f2f2f2;
+    }
+
+    /* Badge styles */
+    .badge {
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+    }
+
+    /* Badge colors based on status */
+    .badge-warning {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    .badge-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .badge-info {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+    .badge-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .badge-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+</style>
+
 <div class="container mt-4">
-    <h1>Manage Service Requests</h1>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Customer</th>
-                <th>Vehicle</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Cost</th>
-                <th>Created At</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for service_request in service_requests %}
-            <tr>
-                <td>{{ service_request.id }}</td>
-                <td>{{ service_request.customer.get_name }}</td>
-                <td>{{ service_request.vehicle }}</td>
-                <td>{{ service_request.problem_description }}</td>
-                <td>{{ service_request.get_status_display }}</td>
-                <td>{{ service_request.cost }}</td>
-                <td>{{ service_request.created_at }}</td>
-                <td>
-                    {% if service_request.status == 'Pending' %}
-                    <a href="{% url 'approve_service_request' service_request.id %}" class="btn btn-success btn-sm me-2">Approve</a>
-                    {% elif service_request.status == 'Approved' %}
-                    <a href="{% url 'assign_mechanic' service_request.id %}" class="btn btn-primary btn-sm me-2">Assign Mechanic</a>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="service-request-container">
+        <h1>Manage Service Requests</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Vehicle</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Assigned Mechanic</th>
+                    <th>Cost</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service_request in service_requests %}
+                <tr>
+                    <td>{{ service_request.id }}</td>
+                    <td>{{ service_request.customer.get_name }}</td>
+                    <td>{{ service_request.vehicle }}</td>
+                    <td>{{ service_request.problem_description }}</td>
+                    <td>
+                        {% if service_request.status == 'Pending' %}
+                            <span class="badge badge-warning">{{ service_request.get_status_display }}</span>
+                        {% elif service_request.status == 'Approved' %}
+                            <span class="badge badge-success">{{ service_request.get_status_display }}</span>
+                        {% elif service_request.status == 'Repairing' %}
+                            <span class="badge badge-info">{{ service_request.get_status_display }}</span>
+                        {% elif service_request.status == 'Repairing Done' %}
+                            <span class="badge badge-primary">{{ service_request.get_status_display }}</span>
+                        {% elif service_request.status == 'Released' %}
+                            <span class="badge badge-secondary">{{ service_request.get_status_display }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if service_request.mechanic %}
+                            {{ service_request.mechanic.get_name }}
+                        {% else %}
+                            Not Assigned
+                        {% endif %}
+                    </td>
+                    <td>{{ service_request.cost }}</td>
+                    <td>{{ service_request.created_at }}</td>
+                    <td>
+                        {% if service_request.status == 'Pending' %}
+                            <a href="{% url 'approve_service_request' service_request.id %}" class="btn btn-success btn-sm me-2">Approve</a>
+                        {% elif service_request.status == 'Approved' %}
+                            <a href="{% url 'assign_mechanic' service_request.id %}" class="btn btn-primary btn-sm me-2">Assign Mechanic</a>
+                        {% endif %}
+                        <a href="{% url 'delete_service_request' service_request.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this service request?');">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}
