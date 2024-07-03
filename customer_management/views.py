@@ -92,13 +92,9 @@ def service_request_detail(request, pk):
     return render(request, 'customer/service_request_detail.html', {'service_request': service_request, 'mechanic_work': mechanic_work})
 
 
-@login_required
-def delete_service_request(request, pk):
-    service_request = ServiceRequest.objects.get(pk=pk, customer__user=request.user)
-    if service_request.status == 'Pending':
-        service_request.delete()
-    return redirect('customer_home')
 
+    
+   
 
 @login_required
 def view_customer_profile(request):

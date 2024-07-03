@@ -3,35 +3,90 @@
 {% block title %}Manage Customers{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1>Manage Customers</h1>
+<!-- Add this CSS in your <style> tag or external CSS file -->
+    <style>
+        /* Custom styling for customer container */
+        .customer-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
     
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Mobile</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for customer in customers %}
-            <tr>
-                <td>{{ customer.id }}</td>
-                <td>{{ customer.get_name }}</td>
-                <td>{{ customer.user.email }}</td>
-                <td>{{ customer.address }}</td>
-                <td>{{ customer.mobile }}</td>
-                <td>
-                    <a href="{% url 'edit_customer' customer.id %}" class="btn btn-warning btn-sm me-2">Edit</a>
-                    <a href="{% url 'delete_customer' customer.id %}" class="btn btn-danger btn-sm">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        /* Custom styling for customer table */
+        .customer-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    
+        /* Custom styling for table header */
+        .customer-container th {
+            background-color: #535557;
+            color: white;
+            text-align: left;
+            padding: 10px;
+        }
+    
+        /* Custom styling for table body */
+        .customer-container td {
+            padding: 10px;
+        }
+    
+        /* Custom styling for striped rows */
+        .customer-container tbody tr:nth-of-type(odd) {
+            background-color: #f2f2f2;
+        }
+    
+        /* Custom styling for no customers message */
+        .customer-container .no-customers {
+            margin-top: 10px;
+            color: #888;
+        }
+    
+        /* Button styles */
+        .customer-container .btn {
+            margin-right: 5px;
+        }
+    </style>
+    
+<div class="container mt-4">
+    <div class="customer-container">
+        <h1>Manage Customers</h1>
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Mobile</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.id }}</td>
+                    <td>{{ customer.get_name }}</td>
+                    <td>{{ customer.user.email }}</td>
+                    <td>{{ customer.address }}</td>
+                    <td>{{ customer.mobile }}</td>
+                    <td>
+                        <a href="{% url 'edit_customer' customer.id %}" class="btn btn-warning btn-sm me-2">Edit</a>
+                        <a href="{% url 'delete_customer' customer.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No customers found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

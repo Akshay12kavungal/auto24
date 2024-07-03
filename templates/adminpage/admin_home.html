@@ -1,37 +1,84 @@
 {% extends "adminpage/base.html" %}
 
 {% block content %}
+<style>
+    .my-4 {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .card {
+        margin-bottom: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+    }
+
+    .list-group-item {
+        background-color: #f8f9fa;
+        margin-bottom: 0.5rem;
+        border: none;
+    }
+
+    .text-muted {
+        color: #6c757d;
+    }
+</style>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h2 class="mt-4">Admin Dashboard</h2>
+            <h2 class="my-4">Admin Dashboard</h2>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <h3>Customers</h3>
-            <ul class="list-group">
-                {% for customer in customers %}
-                    <li class="list-group-item">{{ customer.get_name }}</li>
-                {% endfor %}
-            </ul>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Customers</h3>
+                    <ul class="list-group">
+                        {% for customer in customers %}
+                            <li class="list-group-item">{{ customer.get_name }}</li>
+                        {% empty %}
+                            <li class="list-group-item text-muted">No customers found.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
-            <h3>Mechanics</h3>
-            <ul class="list-group">
-                {% for mechanic in mechanics %}
-                    <li class="list-group-item">{{ mechanic.get_name }} - {{ mechanic.status }}</li>
-                {% endfor %}
-            </ul>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Mechanics</h3>
+                    <ul class="list-group">
+                        {% for mechanic in mechanics %}
+                            <li class="list-group-item">{{ mechanic.get_name }} - {{ mechanic.status }}</li>
+                        {% empty %}
+                            <li class="list-group-item text-muted">No mechanics found.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
-            <h3>Service Requests</h3>
-            <ul class="list-group">
-                {% for request in service_requests %}
-                    <li class="list-group-item">{{ request.vehicle }} - {{ request.status }}</li>
-                {% endfor %}
-            </ul>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Service Requests</h3>
+                    <ul class="list-group">
+                        {% for request in service_requests %}
+                            <li class="list-group-item">{{ request.vehicle }} - {{ request.status }}</li>
+                        {% empty %}
+                            <li class="list-group-item text-muted">No service requests found.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+
+
 {% endblock %}
