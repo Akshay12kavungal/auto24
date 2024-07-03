@@ -17,4 +17,4 @@ class RentalCarForm(forms.ModelForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['rental_car', 'start_date', 'end_date']
+        fields = [ 'start_date', 'end_date']

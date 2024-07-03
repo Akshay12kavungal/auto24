@@ -7,20 +7,17 @@
     <h2>Rental Cars</h2>
     <div class="row">
         {% for car in rental_cars %}
-            <div class="col-md-5 service-card">
+            <div class="col-md-4 service-card mb-4">
                 <div class="card h-100" style="display: flex; flex-direction: column;">
                     <img src="{{ car.image.url }}" class="card-img-top" alt="{{ car.name }}" style="width: 100%; height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="card-title">{{ car.name }}</h5>
                         <p class="card-text">{{ car.description }}</p>
                         <p class="card-text"><strong>Daily Rate:</strong> ${{ car.daily_rate }}</p>
-                        <a href="{% url 'book_car' car.id %}" class="btn btn-primary" style="margin-top: auto;">Book Now</a>
+                        <a href="{% url 'book_car' car.id %}" class="btn btn-primary mt-auto">Book Now</a>
                     </div>
                 </div>
             </div>
-            {% if forloop.counter|divisibleby:3 and not forloop.last %}
-                </div><div class="row mt-4">
-            {% endif %}
         {% endfor %}
     </div>
 </div>

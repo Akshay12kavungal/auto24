@@ -111,9 +111,9 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% if service_request.mechanic %}
-                            {{ service_request.mechanic.get_name }}
-                        {% else %}
+                        {% if service_request.assigned_mechanic %}
+                        {{ service_request.assigned_mechanic.get_name }}
+                    {% else %}
                             Not Assigned
                         {% endif %}
                     </td>
