@@ -1,69 +1,67 @@
-<!-- booking_list.html -->
-
 {% extends 'customer/base.html' %}
 
 {% block title %}Booking List - Auto24{% endblock %}
 
 {% block content %}
-<style>
-    /* Custom styling for the booking table */
-    .table-container {
-        margin-top: 20px;
-    }
-
-    .table-container table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .table-container th,
-    .table-container td {
-        border: 1px solid #dee2e6; /* Bootstrap table border */
-        padding: 8px; /* Padding inside table cells */
-        text-align: left;
-    }
-
-    .table-container th {
-        background-color: #898d91; /* Bootstrap table header background color */
-    }
-
-    .btn-group {
-        white-space: nowrap; /* Prevent button wrapping */
-    }
-</style>
 
 <div class="container mt-4 table-container">
     <h1>Booking List</h1>
     <table class="table table-striped mt-3">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Car</th>
                 <th>User</th>
                 <th>Start Date</th>
                 <th>End Date</th>
+                <th>Total Price</th>
+                <th>Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for booking in bookings %}
                 <tr>
+                    <td>{{ booking.id }}</td>
                     <td>{{ booking.rental_car }}</td>
                     <td>{{ booking.user }}</td>
                     <td>{{ booking.start_date }}</td>
                     <td>{{ booking.end_date }}</td>
+                    <td>${{ booking.total_price }}</td>
+                    <td>
+                    {% if booking.status == 'PENDING' %}
+                        <span class="badge badge-warning">{{ booking.get_status_display }}</span>
+                    {% elif booking.status == 'ACCEPTED' %}
+                        <span class="badge badge-success">{{ booking.get_status_display }}</span>
+                    {% else %}
+                        <span class="badge badge-danger">{{ booking.get_status_display }}</span>
+                    {% endif %}
+                    </td>
                     <td>
                         <div class="btn-group">
-                            <a href="{% url 'update_booking' booking.id %}" class="btn btn-sm btn-info">Edit</a>
+                            {% if booking.status != 'ACCEPTED' %}
+                                <a href="{% url 'update_booking' booking.id %}" class="btn btn-sm btn-info">Edit</a>
+                            {% else %}
+                                <span class="btn btn-sm btn-info disabled" data-toggle="tooltip" title="You can only edit before the admin accepts the request">Edit</span>
+                            {% endif %}
                             <a href="{% url 'delete_booking' booking.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to cancel this booking?')">Cancel</a>
                         </div>
                     </td>
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="5">No bookings found.</td>
+                    <td colspan="8">No bookings found.</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+
+<script>
+    // Initialize tooltips
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
 {% endblock %}

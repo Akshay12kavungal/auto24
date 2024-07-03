@@ -4,10 +4,32 @@
 {% block title %}Booking Confirmation{% endblock %}
 
 {% block content %}
-  <h1>Booking Confirmation</h1>
-  <p>Rental Car: {{ booking.rental_car.name }}</p>
-  <p>Start Date: {{ booking.start_date }}</p>
-  <p>End Date: {{ booking.end_date }}</p>
-  <p>Total Price: ${{ booking.total_price }}</p>
-  <p>Thank you for your booking!</p>
+<style>
+    .confirmation-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa; /* Light gray background */
+        border: 1px solid #e9ecef; /* Light border */
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    }
+
+    .confirmation-container h1 {
+        margin-bottom: 20px;
+    }
+
+    .confirmation-container p {
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container mt-4 confirmation-container">
+    <h1>Booking Confirmation</h1>
+    <p>Rental Car: {{ booking.rental_car.name }}</p>
+    <p>Start Date: {{ booking.start_date }}</p>
+    <p>End Date: {{ booking.end_date }}</p>
+    <p>Total Price: ${{ booking.total_price }}</p>
+    <p>Thank you for your booking!</p>
+</div>
 {% endblock %}

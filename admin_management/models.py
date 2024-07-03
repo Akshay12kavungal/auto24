@@ -25,11 +25,24 @@ class RentalCar(models.Model):
         return self.name
     
 
+
+
+    
 class Booking(models.Model):
+    PENDING = 'PENDING'
+    ACCEPTED = 'ACCEPTED'
+    REJECTED = 'REJECTED'
+    STATUS_CHOICES = [
+        (PENDING, 'Pending'),
+        (ACCEPTED, 'Accepted'),
+        (REJECTED, 'Rejected'),
+    ]
+
     rental_car = models.ForeignKey(RentalCar, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
+    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default=PENDING)
 
     def __str__(self):
         return f"{self.rental_car.name} - {self.user.username}"
@@ -38,5 +51,3 @@ class Booking(models.Model):
     def total_price(self):
         duration = (self.end_date - self.start_date).days + 1
         return duration * self.rental_car.daily_rate
-
-    

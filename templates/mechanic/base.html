@@ -76,14 +76,17 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'mechanic_home' %}">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'assigned_work' %}">My Work</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWork" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Work
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownWork">
+                                <a class="dropdown-item" href="{% url 'assigned_work' %}">My Work</a>
+                                <a class="dropdown-item" href="{% url 'completed_work' %}">Completed Work</a>
+                            </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'completed_work' %}">Completed Work</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'view_earnings' %}">My Earnings </a>
+                            <a class="nav-link" href="{% url 'view_earnings' %}">My Earnings</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'view_mechanic_profile' %}">Profile</a>
@@ -97,7 +100,7 @@
             </div>
         </nav>
     </header>
-   
+    
     <main>
         {% block content %}
         {% endblock %}

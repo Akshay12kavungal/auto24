@@ -31,6 +31,9 @@ urlpatterns = [
     path('adminpage/edit-rental-car/<int:pk>/', views.edit_rental_car, name='edit_rental_car'),
     path('adminpage/delete-rental-car/<int:pk>/', views.delete_rental_car, name='delete_rental_car'),
 
+    path('adminpage/pending_bookings/', views.admin_pending_bookings, name='admin_pending_bookings'),
+    path('adminpage/update_booking_status/<int:booking_id>/<str:status>/', views.admin_update_booking_status, name='admin_update_booking_status'),
+
 #api
     path("api/admin/", include("admin_management.api.urls")),
 ]
