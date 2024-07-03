@@ -45,12 +45,11 @@ def login_customer(request):
 
 
 
-login_required
+@login_required
 def customer_home(request):
     customer = Customer.objects.get(user=request.user)
     service_requests = ServiceRequest.objects.filter(customer=customer)
     return render(request, 'customer/customer_home.html', {'service_requests': service_requests})
-
 
 
 @login_required
