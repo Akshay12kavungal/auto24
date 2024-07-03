@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from admin_management.forms import LoginForm, RentalCarForm
-from admin_management.models import RentalCar
+from admin_management.models import Booking, RentalCar
 from customer_management.forms import CustomerForm, UserForm
 from customer_management.models import Customer, Vehicle, ServiceRequest, Feedback
 from django.contrib.admin.views.decorators import staff_member_required
@@ -161,6 +161,17 @@ def delete_rental_car(request, pk):
         return redirect('rental_car_list')  # Redirect to list view after successful deletion
     return render(request, 'adminpage/rental_cars/delete_rental_car.html', {'rental_car': rental_car})
 
+
+def admin_pending_bookings(request):
+    all_bookings = Booking.objects.all()
+    return render(request, 'adminpage/rental_cars/pending_bookings.html', {'all_bookings': all_bookings})
+
+def admin_update_booking_status(request, booking_id, status):
+    booking = get_object_or_404(Booking, pk=booking_id)
+    if status in [Booking.ACCEPTED, Booking.REJECTED]:
+        booking.status = status
+        booking.save()
+    return redirect('admin_pending_bookings')
 
 def admin_logout(request):
     logout(request)

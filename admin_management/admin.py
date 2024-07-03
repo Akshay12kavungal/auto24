@@ -28,12 +28,23 @@ class RentalCarAdmin(admin.ModelAdmin):
     ]
 
     
+
+
+
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('rental_car', 'user', 'start_date', 'end_date', 'total_price')
-    list_filter = ('start_date', 'end_date')
-    search_fields = ('rental_car__name', 'user__username')
+    list_display = ['id', 'rental_car', 'user','start_date', 'end_date', 'total_price', 'status']
+    list_filter = ['status','start_date', 'end_date']
+    actions = ['accept_bookings', 'reject_bookings']
 
     def total_price(self, obj):
         return obj.total_price
     total_price.short_description = 'Total Price'
+
+    def accept_bookings(self, request, queryset):
+        queryset.update(status=Booking.ACCEPTED)
+    accept_bookings.short_description = "Accept selected bookings"
+
+    def reject_bookings(self, request, queryset):
+        queryset.update(status=Booking.REJECTED)
+    reject_bookings.short_description = "Reject selected bookings"

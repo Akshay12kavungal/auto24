@@ -4,10 +4,36 @@
 {% block title %}Book Car{% endblock %}
 
 {% block content %}
-  <h1>Book {{ rental_car.name }}</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Confirm Booking</button>
-  </form>
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa; /* Light gray background */
+        border: 1px solid #e9ecef; /* Light border */
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    }
+
+    .form-container h1 {
+        margin-bottom: 20px;
+    }
+
+    .form-container form {
+        margin-top: 20px;
+    }
+
+    .form-container button[type="submit"] {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container mt-4 form-container">
+    <h1>Book {{ rental_car.name }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Confirm Booking</button>
+    </form>
+</div>
 {% endblock %}

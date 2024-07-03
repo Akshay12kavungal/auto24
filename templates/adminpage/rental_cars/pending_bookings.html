@@ -1,0 +1,57 @@
+<!-- templates/admin/pending_bookings.html -->
+{% extends 'adminpage/base.html' %}
+
+{% block title %}Car Bookings{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Car Bookings</h1>
+    {% if all_bookings %}
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Booking ID</th>
+                    <th scope="col">Rental Car</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Total Price</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in all_bookings %}
+                    <tr>
+                        <td>{{ booking.id }}</td>
+                        <td>{{ booking.rental_car.name }}</td>
+                        <td>{{ booking.user.username }}</td>
+                        <td>{{ booking.start_date }}</td>
+                        <td>{{ booking.end_date }}</td>
+                        <td>${{ booking.total_price }}</td>
+                        <td>
+                            {% if booking.status == 'PENDING' %}
+                                <span class="badge badge-warning">{{ booking.get_status_display }}</span>
+                            {% elif booking.status == 'ACCEPTED' %}
+                                <span class="badge badge-success">{{ booking.get_status_display }}</span>
+                            {% else %}
+                                <span class="badge badge-danger">{{ booking.get_status_display }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if booking.status == 'PENDING' %}
+                                <a href="{% url 'admin_update_booking_status' booking.id 'ACCEPTED' %}" class="btn btn-success btn-sm">Accept</a>
+                                <a href="{% url 'admin_update_booking_status' booking.id 'REJECTED' %}" class="btn btn-danger btn-sm">Reject</a>
+                            {% else %}
+                                <span class="badge badge-secondary">Processed</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="alert alert-info">No bookings found.</p>
+    {% endif %}
+</div>
+{% endblock %}
