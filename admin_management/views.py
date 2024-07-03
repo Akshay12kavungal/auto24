@@ -36,10 +36,27 @@ def admin_login(request):
 
 @staff_member_required
 def admin_home(request):
-    customers = Customer.objects.all()
-    mechanics = Mechanic.objects.all()
-    service_requests = ServiceRequest.objects.all().order_by('-created_at')
-    return render(request, 'adminpage/admin_home.html', {'customers': customers, 'mechanics': mechanics, 'service_requests': service_requests})
+    total_customers = Customer.objects.count()
+    total_mechanics = Mechanic.objects.count()
+    total_service_requests = ServiceRequest.objects.count()
+    total_car_rentals = Booking.objects.count()  # Assuming you have a CarRental model
+
+    customers = Customer.objects.all()[:5]  # Get the latest 5 customers
+    mechanics = Mechanic.objects.all()[:5]  # Get the latest 5 mechanics
+    service_requests = ServiceRequest.objects.all()[:5]  # Get the latest 5 service requests
+
+    context = {
+        'total_customers': total_customers,
+        'total_mechanics': total_mechanics,
+        'total_service_requests': total_service_requests,
+        'total_car_rentals': total_car_rentals,
+        'customers': customers,
+        'mechanics': mechanics,
+        'service_requests': service_requests,
+    }
+    
+    return render(request, 'adminpage/admin_home.html', context)
+
 
 @staff_member_required
 def manage_customers(request):

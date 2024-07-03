@@ -17,6 +17,19 @@
         margin-bottom: 1rem;
     }
 
+    .card-body {
+        text-align: center;
+    }
+
+    .card-body h3 {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-body p {
+        font-size: 1.25rem;
+    }
+
     .list-group-item {
         background-color: #f8f9fa;
         margin-bottom: 0.5rem;
@@ -26,6 +39,15 @@
     .text-muted {
         color: #6c757d;
     }
+
+    .summary-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .summary-link:hover {
+        text-decoration: underline;
+    }
 </style>
 <div class="container">
     <div class="row">
@@ -34,13 +56,57 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <a href="{% url 'manage_customers' %}" class="summary-link">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>{{ total_customers }}</h3>
+                        <p>Customers</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'manage_mechanics' %}" class="summary-link">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>{{ total_mechanics }}</h3>
+                        <p>Mechanics</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'manage_service_requests' %}" class="summary-link">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>{{ total_service_requests }}</h3>
+                        <p>Service Requests</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'admin_pending_bookings' %}" class="summary-link">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>{{ total_car_rentals }}</h3>
+                        <p>Car Rentals</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row my-4">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="card-title">Customers</h3>
+                    <h3 class="card-title">Recent Customers</h3>
                     <ul class="list-group">
                         {% for customer in customers %}
-                            <li class="list-group-item">{{ customer.get_name }}</li>
+                            <li class="list-group-item">
+                               {{ customer.get_name }}</a>
+                            </li>
                         {% empty %}
                             <li class="list-group-item text-muted">No customers found.</li>
                         {% endfor %}
@@ -48,13 +114,15 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="card-title">Mechanics</h3>
+                    <h3 class="card-title">Recent Mechanics</h3>
                     <ul class="list-group">
                         {% for mechanic in mechanics %}
-                            <li class="list-group-item">{{ mechanic.get_name }} - {{ mechanic.status }}</li>
+                            <li class="list-group-item">
+                                {{ mechanic.get_name }} - {{ mechanic.status }}</a>
+                            </li>
                         {% empty %}
                             <li class="list-group-item text-muted">No mechanics found.</li>
                         {% endfor %}
@@ -62,13 +130,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+    </div>
+    <div class="row my-4">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="card-title">Service Requests</h3>
+                    <h3 class="card-title">Recent Service Requests</h3>
                     <ul class="list-group">
                         {% for request in service_requests %}
-                            <li class="list-group-item">{{ request.vehicle }} - {{ request.status }}</li>
+                            <li class="list-group-item">
+                                {{ request.vehicle }} - {{ request.status }}</a>
+                            </li>
                         {% empty %}
                             <li class="list-group-item text-muted">No service requests found.</li>
                         {% endfor %}
@@ -78,7 +150,4 @@
         </div>
     </div>
 </div>
-
-
-
 {% endblock %}
