@@ -35,7 +35,7 @@ def login_mechanic(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
-            if user is not None and user.mechanic is not None:
+            if user is not None and hasattr(user, 'mechanic'):
                 login(request, user)
                 return redirect('mechanic_home')  # Redirect to mechanic dashboard after successful login
             else:
