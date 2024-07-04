@@ -8,6 +8,7 @@ from admin_management.models import Booking, RentalCar
 from .models import Customer, Notification, Vehicle, ServiceRequest, Feedback
 from .forms import UserForm, CustomerForm, VehicleForm, ServiceRequestForm, FeedbackForm
 from mechanic_management.models import Mechanic, MechanicWork
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def signup_customer(request):
     if request.method == 'POST':
@@ -129,9 +130,19 @@ def customer_feedback(request):
 
 @login_required
 def notification_list(request):
-    notifications = request.user.notifications.filter(is_read=False)
-    return render(request, 'customer/notification_list.html', {'notifications': notifications})
+    notifications_list = Notification.objects.order_by('-created_at')  # Order by created_at descending
 
+    paginator = Paginator(notifications_list, 10)  # Show 10 notifications per page
+    page = request.GET.get('page')
+
+    try:
+        notifications = paginator.page(page)
+    except PageNotAnInteger:
+        notifications = paginator.page(1)  # If page is not an integer, deliver first page.
+    except EmptyPage:
+        notifications = paginator.page(paginator.num_pages)  # If page is out of range (e.g. 9999), deliver last page of results.
+
+    return render(request, 'customer/notification_list.html', {'notifications': notifications})
 @login_required
 def booking_history(request):
     customer = Customer.objects.get(user=request.user)
@@ -144,8 +155,10 @@ def rental_car_list(request):
     return render(request, 'customer/rental_cars/rental_car_list.html', {'rental_cars': rental_cars})
 
 
+login_required
 def book_car(request, car_id):
     rental_car = RentalCar.objects.get(pk=car_id)
+    
     if request.method == 'POST':
         form = BookingForm(request.POST)
         if form.is_valid():
@@ -153,6 +166,11 @@ def book_car(request, car_id):
             booking.rental_car = rental_car
             booking.user = request.user
             booking.save()
+
+            # Create notification for the customer
+            message = f"Your booking for {rental_car} has been {booking.status}."
+            Notification.objects.create(recipient=booking.user, message=message)
+
             return redirect('booking_confirmation', booking_id=booking.pk)
     else:
         form = BookingForm()

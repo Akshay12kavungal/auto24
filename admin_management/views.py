@@ -212,6 +212,8 @@ def admin_update_booking_status(request, booking_id, status):
     if status in [Booking.ACCEPTED, Booking.REJECTED]:
         booking.status = status
         booking.save()
+        message = f"Your booking for {booking.rental_car.name} has been {booking.status}."
+        Notification.objects.create(recipient=booking.user, message=message)
     return redirect('admin_pending_bookings')
 
 def admin_logout(request):
