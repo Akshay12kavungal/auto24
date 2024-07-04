@@ -12,9 +12,12 @@ class RentalCarForm(forms.ModelForm):
     class Meta:
         model = RentalCar
         fields = ['name', 'description', 'image', 'daily_rate', 'availability']
-
-
+        
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = [ 'start_date', 'end_date']
+        fields = ['start_date', 'end_date']
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }
