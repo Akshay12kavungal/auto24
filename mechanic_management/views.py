@@ -62,30 +62,33 @@ def assigned_work(request):
 def update_work_status(request, pk):
     mechanic = get_object_or_404(Mechanic, user=request.user)
     work = get_object_or_404(MechanicWork, pk=pk, mechanic=mechanic)
+
     if request.method == 'POST':
         form = UpdateWorkStatusForm(request.POST, instance=work)
         if form.is_valid():
             work = form.save(commit=False)
             service_request = work.service_request
-            if work.status in ['Released']:
+            
+            if work.status == 'Released' and not MechanicEarnings.objects.filter(service_request=service_request).exists():
                 service_request.status = work.status
                 service_request.cost = form.cleaned_data['cost']
                 service_request.save()
+                
                 mechanic_earnings = MechanicEarnings.objects.create(
                     mechanic=mechanic.user,
                     amount=form.cleaned_data['cost'],
                     service_request=service_request
                 )
 
-            work.save()
-            message = f"Your service request status has been updated to {service_request.status}."
-            Notification.objects.create(recipient=service_request.customer.user, message=message)
+                message = f"Your service request status has been updated to {service_request.status}."
+                Notification.objects.create(recipient=service_request.customer.user, message=message)
 
-            return redirect('mechanic_home')
+            work.save()
+            return redirect('assigned_work')
     else:
         form = UpdateWorkStatusForm(instance=work)
+    
     return render(request, 'mechanic/update_work_status.html', {'form': form, 'work': work})
-
 
 
 @login_required
@@ -106,21 +109,32 @@ def update_mechanic_profile(request):
     return render(request, 'mechanic/update_mechanic_profile.html', {'form': form})
 
 
-
-
 @login_required
 def completed_work(request):
     mechanic = get_object_or_404(Mechanic, user=request.user)
-    completed_work = MechanicWork.objects.filter(
+    
+    completed_works = MechanicWork.objects.filter(
         mechanic=mechanic, 
         status__in=['Repairing Done', 'Released']
     )
+    
+    unique_service_requests = []
+    completed_work = []
+
+    for work in completed_works:
+        if work.service_request not in unique_service_requests:
+            unique_service_requests.append(work.service_request)
+            completed_work.append(work)
+
     return render(request, 'mechanic/completed_work.html', {'completed_work': completed_work})
+
 
 @login_required
 def view_earnings(request):
     mechanic_earnings = MechanicEarnings.objects.filter(mechanic=request.user)
     return render(request, 'mechanic/earnings.html', {'mechanic_earnings': mechanic_earnings})
+
+
 
 def mechanic_logout(request):
     logout(request)
