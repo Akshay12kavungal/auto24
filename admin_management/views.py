@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from admin_management.forms import LoginForm, RentalCarForm
 from admin_management.models import Booking, RentalCar
 from customer_management.forms import CustomerForm, UserForm
-from customer_management.models import Customer, Vehicle, ServiceRequest, Feedback
+from customer_management.models import Customer, Notification, Vehicle, ServiceRequest, Feedback
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -57,6 +57,7 @@ def admin_home(request):
     
     return render(request, 'adminpage/admin_home.html', context)
 
+#customer manage
 
 @staff_member_required
 def manage_customers(request):
@@ -86,6 +87,8 @@ def delete_customer(request, pk):
         return redirect('manage_customers')
     return render(request, 'adminpage/delete_customer.html', {'customer': customer})
 
+
+#manage mechanic
 @staff_member_required
 def manage_mechanics(request):
     mechanics = Mechanic.objects.all()
@@ -130,6 +133,8 @@ def approve_service_request(request, pk):
     service_request = ServiceRequest.objects.get(pk=pk)
     service_request.status = 'Approved'
     service_request.save()
+    message = f"Your service request status has been updated to {service_request.status}."
+    Notification.objects.create(recipient=service_request.customer.user, message=message)
     return redirect('manage_service_requests')
 
 
@@ -156,10 +161,15 @@ def assign_mechanic(request, pk):
         MechanicWork.objects.create(mechanic=mechanic, service_request=service_request, status='Repairing')
         service_request.status = 'Repairing'
         service_request.save()
+        message = f"Your service request status has been updated to {service_request.status}, assigned to {mechanic.user.get_full_name()}."
+        Notification.objects.create(recipient=service_request.customer.user, message=message)
+        
         return redirect('manage_service_requests')
     return render(request, 'adminpage/assign_mechanic.html', {'service_request': service_request, 'mechanics': mechanics})
 
 
+
+#rental car
 def rental_car_list(request):
     rental_cars = RentalCar.objects.all()
     return render(request, 'adminpage/rental_cars/rental_car_list.html', {'rental_cars': rental_cars})
