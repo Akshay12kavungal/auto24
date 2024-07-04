@@ -19,7 +19,7 @@ urlpatterns = [
     
     path('customer/feedback/', views.customer_feedback, name='customer_feedback'),
     path('customer/booking-history/', views.booking_history, name='booking_history'),
-    path('customer/list/', views.notification_list, name='notification_list'),
+    path('customer/notification/', views.notification_list, name='notification_list'),
    
 
     path('customer/rental-cars/', views.rental_car_list, name='customer_rental_car_list'),

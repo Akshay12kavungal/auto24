@@ -37,6 +37,7 @@ class ServiceRequest(models.Model):
     ]
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='service_requests')
+    assigned_mechanic = models.ForeignKey('mechanic_management.Mechanic', on_delete=models.CASCADE, related_name='service_requests', null=True, blank=True) 
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE, related_name='service_requests')
     problem_description = models.CharField(max_length=300)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
