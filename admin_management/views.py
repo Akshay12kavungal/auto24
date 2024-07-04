@@ -138,7 +138,7 @@ def approve_service_request(request, pk):
     return redirect('manage_service_requests')
 
 
-
+@staff_member_required
 def delete_service_request(request, pk):
     service_request = get_object_or_404(ServiceRequest, pk=pk)
     
@@ -150,23 +150,28 @@ def delete_service_request(request, pk):
 
 
 
-
 @staff_member_required
 def assign_mechanic(request, pk):
-    service_request = ServiceRequest.objects.get(pk=pk)
+    service_request = get_object_or_404(ServiceRequest, pk=pk)
     mechanics = Mechanic.objects.filter(status=True)
+    
     if request.method == 'POST':
         mechanic_id = request.POST.get('mechanic')
-        mechanic = Mechanic.objects.get(pk=mechanic_id)
+        mechanic = get_object_or_404(Mechanic, pk=mechanic_id)
+        
+        # Update MechanicWork instance and service request status
         MechanicWork.objects.create(mechanic=mechanic, service_request=service_request, status='Repairing')
         service_request.status = 'Repairing'
+        service_request.assigned_mechanic = mechanic  # Assign the mechanic to the service request
         service_request.save()
+        
+        # Create notification message
         message = f"Your service request status has been updated to {service_request.status}, assigned to {mechanic.user.get_full_name()}."
         Notification.objects.create(recipient=service_request.customer.user, message=message)
         
         return redirect('manage_service_requests')
+    
     return render(request, 'adminpage/assign_mechanic.html', {'service_request': service_request, 'mechanics': mechanics})
-
 
 
 #rental car
