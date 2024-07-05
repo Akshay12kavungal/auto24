@@ -74,6 +74,7 @@
                     <th>Service Request ID</th>
                     <th>Vehicle</th>
                     <th>Status</th>
+                    <th>Service Type</th>
                     <th>Cost</th>
                     <th>Action</th>
                 </tr>
@@ -84,6 +85,7 @@
                     <td>{{ request.id }}</td>
                     <td>{{ request.vehicle }}</td>
                     <td>{{ request.status }}</td>
+                    <td>{{request.service_type}}   ({{request.problem_description}})</td>
                     <td>{{ request.cost }}</td>
                     <td><a href="{% url 'service_request_detail' request.id %}" class="btn btn-view-details btn-sm">View Details</a></td>
                 </tr>

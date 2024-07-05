@@ -17,7 +17,7 @@ class VehicleAdmin(admin.ModelAdmin):
 
 @admin.register(ServiceRequest)
 class ServiceRequestAdmin(admin.ModelAdmin):
-    list_display = ['customer','assigned_mechanic', 'vehicle', 'problem_description', 'status', 'cost', 'created_at']
+    list_display = ['customer','assigned_mechanic', 'vehicle', 'problem_description', 'status','service_type','cost', 'created_at']
     search_fields = ['customer__user__first_name', 'assigned_mechanic','customer__user__last_name', 'vehicle__number', 'status']
     list_filter = ['status', 'created_at']
 
