@@ -23,7 +23,7 @@ class VehicleForm(forms.ModelForm):
 class ServiceRequestForm(forms.ModelForm):
     class Meta:
         model = ServiceRequest
-        fields = ['vehicle', 'problem_description']
+        fields = ['service_type','problem_description']
 
 class FeedbackForm(forms.ModelForm):
     class Meta:
