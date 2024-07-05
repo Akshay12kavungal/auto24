@@ -7,6 +7,7 @@ from customer_management.models import Notification, ServiceRequest
 from .models import Mechanic, MechanicEarnings, MechanicWork
 from .forms import MechanicForm, UpdateWorkStatusForm
 from django.contrib.auth import authenticate, login,logout
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 
@@ -54,7 +55,17 @@ def mechanic_home(request):
 @login_required
 def assigned_work(request):
     mechanic = request.user.mechanic  # Assuming the logged-in user is a mechanic
-    assigned_work = MechanicWork.objects.filter(mechanic=mechanic)
+    assigned_work = MechanicWork.objects.filter(mechanic=mechanic).order_by('-assigned_at')
+
+    paginator = Paginator(assigned_work, 10)  # Show 10 notifications per page
+    page = request.GET.get('page')
+
+    try:
+        assigned_work = paginator.page(page)
+    except PageNotAnInteger:
+        assigned_work = paginator.page(1)  # If page is not an integer, deliver first page.
+    except EmptyPage:
+        assigned_work = paginator.page(paginator.num_pages)  # If page is out of range (e.g. 9999), deliver last page of results.
     return render(request, 'mechanic/assigned_work.html', {'assigned_work': assigned_work})
 
 
@@ -109,6 +120,7 @@ def update_mechanic_profile(request):
     return render(request, 'mechanic/update_mechanic_profile.html', {'form': form})
 
 
+
 @login_required
 def completed_work(request):
     mechanic = get_object_or_404(Mechanic, user=request.user)
@@ -116,22 +128,41 @@ def completed_work(request):
     completed_works = MechanicWork.objects.filter(
         mechanic=mechanic, 
         status__in=['Repairing Done', 'Released']
-    )
+    ).order_by('-assigned_at')  # Order by assigned_at in descending order
     
     unique_service_requests = []
-    completed_work = []
+    unique_completed_work = []
 
     for work in completed_works:
         if work.service_request not in unique_service_requests:
             unique_service_requests.append(work.service_request)
-            completed_work.append(work)
+            unique_completed_work.append(work)
+
+    paginator = Paginator(unique_completed_work, 10)  # Show 10 items per page
+    page = request.GET.get('page')
+
+    try:
+        completed_work = paginator.page(page)
+    except PageNotAnInteger:
+        completed_work = paginator.page(1)  # If page is not an integer, deliver first page.
+    except EmptyPage:
+        completed_work = paginator.page(paginator.num_pages)  # If page is out of range, deliver last page of results.
 
     return render(request, 'mechanic/completed_work.html', {'completed_work': completed_work})
-
-
 @login_required
 def view_earnings(request):
-    mechanic_earnings = MechanicEarnings.objects.filter(mechanic=request.user)
+    mechanic_earnings = MechanicEarnings.objects.filter(mechanic=request.user).order_by('-created_at')
+
+    paginator = Paginator(mechanic_earnings, 4)  # Show 10 items per page
+    page = request.GET.get('page')
+
+    try:
+        mechanic_earnings = paginator.page(page)
+    except PageNotAnInteger:
+        mechanic_earnings = paginator.page(1)  # If page is not an integer, deliver first page.
+    except EmptyPage:
+        mechanic_earnings = paginator.page(paginator.num_pages)  # If page is out of range, deliver last page of results.
+
     return render(request, 'mechanic/earnings.html', {'mechanic_earnings': mechanic_earnings})
 
 

@@ -13,6 +13,8 @@ class Mechanic(models.Model):
     skill = models.CharField(max_length=500, null=True)
     salary = models.IntegerField(null=True)
     status = models.BooleanField(default=False)
+    created_at = models.DateTimeField(default=timezone.now)
+
 
     @property
     def get_name(self):
@@ -31,6 +33,7 @@ class MechanicWork(models.Model):
         ('Released', 'Released')
     ], default='Repairing')
     cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    
 
     def __str__(self):
         return f"Work on {self.service_request} by {self.mechanic.get_name}"

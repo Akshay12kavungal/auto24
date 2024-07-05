@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from customer_management.models import ServiceRequest
+from django.utils import timezone
 
 
 class AdminCommission(models.Model):
@@ -20,6 +21,7 @@ class RentalCar(models.Model):
     image=models.ImageField(upload_to='rental_cars/')
     daily_rate=models.DecimalField(max_digits=10,decimal_places=2)
     availability=models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.name
@@ -43,6 +45,7 @@ class Booking(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default=PENDING)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"{self.rental_car.name} - {self.user.username}"

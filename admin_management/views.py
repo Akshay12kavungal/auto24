@@ -11,6 +11,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from mechanic_management.models import Mechanic, MechanicWork
 from mechanic_management.forms import MechanicForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 def home(request):
     return render(request, 'home.html')
@@ -61,7 +63,16 @@ def admin_home(request):
 
 @staff_member_required
 def manage_customers(request):
-    customers = Customer.objects.all()
+    customers = Customer.objects.order_by('created_at')
+    paginator = Paginator(customers, 10)  # Show 4 rental cars per page
+    page = request.GET.get('page')
+
+    try:
+        customers = paginator.page(page)
+    except PageNotAnInteger:
+        customers = paginator.page(1)  # If page is not an integer, deliver first page.
+    except EmptyPage:
+        customers = paginator.page(paginator.num_pages)  # If page is out of range, deliver last page.
     return render(request, 'adminpage/manage_customers.html', {'customers': customers})
 
 @staff_member_required
@@ -91,7 +102,17 @@ def delete_customer(request, pk):
 #manage mechanic
 @staff_member_required
 def manage_mechanics(request):
-    mechanics = Mechanic.objects.all()
+    mechanics = Mechanic.objects.order_by('-created_at')
+
+    paginator = Paginator(mechanics, 10)  # Show 4 rental cars per page
+    page = request.GET.get('page')
+
+    try:
+        mechanics = paginator.page(page)
+    except PageNotAnInteger:
+        mechanics = paginator.page(1)  # If page is not an integer, deliver first page.
+    except EmptyPage:
+        mechanics = paginator.page(paginator.num_pages)  # If page is out of range, deliver last page.
     return render(request, 'adminpage/manage_mechanics.html', {'mechanics': mechanics})
 
 
@@ -125,8 +146,15 @@ def approve_mechanic(request, pk):
 
 @staff_member_required
 def manage_service_requests(request):
-    service_requests = ServiceRequest.objects.all()
-    return render(request, 'adminpage/manage_service_requests.html', {'service_requests': service_requests})
+    service_requests = ServiceRequest.objects.order_by('-created_at')
+    paginator = Paginator(service_requests, 10)  # Show 10 service requests per page
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'adminpage/manage_service_requests.html', {'page_obj': page_obj})
+
+
 
 @staff_member_required
 def approve_service_request(request, pk):
@@ -176,7 +204,18 @@ def assign_mechanic(request, pk):
 
 #rental car
 def rental_car_list(request):
-    rental_cars = RentalCar.objects.all()
+    rental_cars = RentalCar.objects.order_by('-created_at')
+
+    paginator = Paginator(rental_cars, 10)  # Show 4 rental cars per page
+    page = request.GET.get('page')
+
+    try:
+        rental_cars = paginator.page(page)
+    except PageNotAnInteger:
+        rental_cars = paginator.page(1)  # If page is not an integer, deliver first page.
+    except EmptyPage:
+        rental_cars = paginator.page(paginator.num_pages)  # If page is out of range, deliver last page.
+
     return render(request, 'adminpage/rental_cars/rental_car_list.html', {'rental_cars': rental_cars})
 
 def add_rental_car(request):
@@ -209,7 +248,17 @@ def delete_rental_car(request, pk):
 
 
 def admin_pending_bookings(request):
-    all_bookings = Booking.objects.all()
+    all_bookings = Booking.objects.order_by('-created_at')
+
+    paginator = Paginator(all_bookings, 10) 
+    page = request.GET.get('page')
+
+    try:
+        all_bookings = paginator.page(page)
+    except PageNotAnInteger:
+        all_bookings = paginator.page(1)  # If page is not an integer, deliver first page.
+    except EmptyPage:
+        all_bookings = paginator.page(paginator.num_pages)  # If page is out of range, deliver last page.
     return render(request, 'adminpage/rental_cars/pending_bookings.html', {'all_bookings': all_bookings})
 
 def admin_update_booking_status(request, booking_id, status):
