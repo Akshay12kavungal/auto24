@@ -3,11 +3,8 @@
 {% block title %}Rental Cars{% endblock %}
 
 {% block content %}
-
-
 <div class="container mt-4">
     <h2>Rental Cars</h2>
-   
 
     <div class="table-responsive">
         <table class="table table-striped table-bordered">
@@ -35,11 +32,34 @@
                     <td colspan="4">No rental cars found.</td>
                 </tr>
                 {% endfor %}
-
-                
             </tbody>
         </table>
         <a href="{% url 'add_rental_car' %}" class="btn btn-primary mb-2">Add Rental Car</a>
     </div>
+</div>
+
+<!-- Pagination -->
+<div class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if rental_cars.has_other_pages %}
+            {% if rental_cars.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">&laquo;</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ rental_cars.previous_page_number }}">&lsaquo;</a></li>
+            {% endif %}
+            
+            {% for num in rental_cars.paginator.page_range %}
+                {% if rental_cars.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% elif num > rental_cars.number|add:'-3' and num < rental_cars.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+            
+            {% if rental_cars.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ rental_cars.next_page_number }}">&rsaquo;</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ rental_cars.paginator.num_pages }}">&raquo;</a></li>
+            {% endif %}
+        {% endif %}
+    </ul>
 </div>
 {% endblock %}

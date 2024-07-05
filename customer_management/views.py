@@ -146,7 +146,17 @@ def notification_list(request):
 @login_required
 def booking_history(request):
     customer = Customer.objects.get(user=request.user)
-    service_requests = ServiceRequest.objects.filter(customer=customer)
+    service_requests = ServiceRequest.objects.filter(customer=customer).order_by('-created_at')
+
+    paginator = Paginator(service_requests, 10)  # Show 10 notifications per page
+    page = request.GET.get('page')
+
+    try:
+        service_requests = paginator.page(page)
+    except PageNotAnInteger:
+        service_requests = paginator.page(1)  # If page is not an integer, deliver first page.
+    except EmptyPage:
+        service_requests = paginator.page(paginator.num_pages)  # If page is out of range (e.g. 9999), deliver last page of results.
     return render(request, 'customer/booking_history.html', {'service_requests': service_requests})
 
 
@@ -182,8 +192,19 @@ def booking_confirmation(request, booking_id):
     return render(request, 'customer/rental_cars/booking_confirmation.html', {'booking': booking})
 
 
+@login_required
 def booking_list(request):
-    bookings = Booking.objects.all()
+    bookings = Booking.objects.order_by('-created_at')
+    paginator = Paginator(bookings, 10)  # Show 10 bookings per page
+    page = request.GET.get('page')
+
+    try:
+        bookings = paginator.page(page)
+    except PageNotAnInteger:
+        bookings = paginator.page(1)  # If page is not an integer, deliver first page.
+    except EmptyPage:
+        bookings = paginator.page(paginator.num_pages)  # If page is out of range (e.g. 9999), deliver last page of results.
+
     return render(request, 'customer/rental_cars/booking_list.html', {'bookings': bookings})
 
 

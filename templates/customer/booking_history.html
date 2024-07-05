@@ -99,4 +99,29 @@
 
     <a href="{% url 'customer_home' %}" class="btn btn-primary mt-3">Back to Home</a>
 </div>
+
+<!-- Pagination -->
+<div class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if service_requests.has_other_pages %}
+            {% if service_requests.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">&laquo;</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ service_requests.previous_page_number }}">&lsaquo;</a></li>
+            {% endif %}
+            
+            {% for num in service_requests.paginator.page_range %}
+                {% if service_requests.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% elif num > service_requests.number|add:'-3' and num < service_requests.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+            
+            {% if service_requests.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ service_requests.next_page_number }}">&rsaquo;</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ service_requests.paginator.num_pages }}">&raquo;</a></li>
+            {% endif %}
+        {% endif %}
+    </ul>
+</div>
 {% endblock %}

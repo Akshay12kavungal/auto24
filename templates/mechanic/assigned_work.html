@@ -50,4 +50,30 @@
         </ul>
     </div>
 </div>
+
+<!-- Pagination -->
+<div class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if assigned_work.has_other_pages %}
+            {% if assigned_work.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">&laquo;</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ assigned_work.previous_page_number }}">&lsaquo;</a></li>
+            {% endif %}
+            
+            {% for num in assigned_work.paginator.page_range %}
+                {% if assigned_work.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% elif num > assigned_work.number|add:'-3' and num < assigned_work.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+            
+            {% if assigned_work.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ assigned_work.next_page_number }}">&rsaquo;</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ assigned_work.paginator.num_pages }}">&raquo;</a></li>
+            {% endif %}
+        {% endif %}
+    </ul>
+</div>
+
 {% endblock %}

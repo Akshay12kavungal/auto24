@@ -7,6 +7,7 @@ class Customer(models.Model):
     profile_pic = models.ImageField(upload_to='profile_pic/CustomerProfilePic/', null=True, blank=True)
     address = models.CharField(max_length=40)
     mobile = models.CharField(max_length=20, null=False)
+    created_at = models.DateTimeField(default=timezone.now)
 
     @property
     def get_name(self):

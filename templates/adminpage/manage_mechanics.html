@@ -102,4 +102,28 @@
         </table>
     </div>
 </div>
+<!-- Pagination -->
+<div class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if mechanics.has_other_pages %}
+            {% if mechanics.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">&laquo;</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ mechanics.previous_page_number }}">&lsaquo;</a></li>
+            {% endif %}
+            
+            {% for num in mechanics.paginator.page_range %}
+                {% if mechanics.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% elif num > mechanics.number|add:'-3' and num < mechanics.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+            
+            {% if mechanics.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ mechanics.next_page_number }}">&rsaquo;</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ mechanics.paginator.num_pages }}">&raquo;</a></li>
+            {% endif %}
+        {% endif %}
+    </ul>
+</div>
 {% endblock %}
